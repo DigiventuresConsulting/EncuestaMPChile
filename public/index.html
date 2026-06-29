@@ -528,6 +528,12 @@ function validateBloque(b){
 
 function goNext(){
   if(!validateBloque(currentBloque)) return;
+  // Evento Meta Pixel solo en el primer botón Continuar (paso Contacto)
+  if(currentBloque === 0 && typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'InicioEncuesta', {
+      content_name: 'Encuesta MP Chile'
+    });
+  }
   if(currentBloque < totalBloques - 1){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
     currentBloque++;
