@@ -536,7 +536,7 @@ function goNext(){
   }
   // Evento Meta Pixel en el botón Continuar del paso Tamaño
   if(currentBloque === 1 && typeof fbq !== 'undefined') {
-    fbq('trackCustom', 'PasoTamaño', {
+    fbq('trackCustom', 'CompletaEtapa2', {
       content_name: 'Encuesta MP Chile - Tamaño completado',
       tamanio: getRadio('q0')
     });
