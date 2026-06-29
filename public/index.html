@@ -534,6 +534,13 @@ function goNext(){
       content_name: 'Encuesta MP Chile'
     });
   }
+  // Evento Meta Pixel en el botón Continuar del paso Tamaño
+  if(currentBloque === 1 && typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'PasoTamaño', {
+      content_name: 'Encuesta MP Chile - Tamaño completado',
+      tamanio: getRadio('q0')
+    });
+  }
   if(currentBloque < totalBloques - 1){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
     currentBloque++;
