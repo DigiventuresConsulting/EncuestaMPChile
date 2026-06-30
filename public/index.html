@@ -713,6 +713,50 @@ function getRadioValue(name){
   return checked ? checked.value : '';
 }
 
+function resetFormExceptEmail(newEmail){
+  // Limpia todos los campos de contacto (excepto el mail que se está escribiendo) y todas las selecciones
+  document.getElementById('email-empresa').value = '';
+  document.getElementById('rut').value = '';
+  document.getElementById('telefono').value = '';
+
+  document.querySelectorAll('.opciones input[type=radio]').forEach(input => {
+    input.checked = false;
+    const opt = input.closest('.opcion');
+    if(opt) opt.classList.remove('selected');
+  });
+
+  // Oculta subpreguntas condicionales que pudieran haber quedado visibles
+  ['sq-q2-clp','sq-q2-uf','pq-q3','pq-q4','sq-q3a','sq-q3b',
+   'sq-q6-clp','sq-q6-uf','pq-q7','pq-q8','sq-q7a','sq-q7b'].forEach(hide);
+
+  if(currentBloque !== 0){
+    document.getElementById('bloque-'+currentBloque).classList.remove('active');
+    currentBloque = 0;
+    document.getElementById('bloque-0').classList.add('active');
+    updateProgress();
+  }
+
+  document.getElementById('email').value = newEmail;
+  clearLocalDraft();
+}
+
+function handleEmailChange(){
+  let storedEmail = '';
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if(raw){
+      const snap = JSON.parse(raw);
+      storedEmail = (snap && snap.mailContacto) ? snap.mailContacto.trim().toLowerCase() : '';
+    }
+  } catch(e) { /* ignorar */ }
+
+  const typedEmail = document.getElementById('email').value.trim().toLowerCase();
+
+  if(storedEmail && typedEmail && storedEmail !== typedEmail){
+    resetFormExceptEmail(document.getElementById('email').value.trim());
+  }
+}
+
 function saveLocalDraft(){
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(getFormSnapshot()));
@@ -825,6 +869,11 @@ function savePartial(){
 
 updateProgress();
 restoreLocalDraft();
+
+const emailInput = document.getElementById('email');
+if(emailInput){
+  emailInput.addEventListener('blur', handleEmailChange);
+}
 </script>
 </body>
 </html>
