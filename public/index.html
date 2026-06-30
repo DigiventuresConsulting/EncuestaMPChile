@@ -713,10 +713,10 @@ function getRadioValue(name){
   return checked ? checked.value : '';
 }
 
-function resetFormExceptEmail(newEmail){
-  // Limpia todos los campos de contacto (excepto el mail que se está escribiendo) y todas las selecciones
+function resetFormExceptRut(newRut){
+  // Limpia todos los campos de contacto (excepto el RUT que se está escribiendo) y todas las selecciones
   document.getElementById('email-empresa').value = '';
-  document.getElementById('rut').value = '';
+  document.getElementById('email').value = '';
   document.getElementById('telefono').value = '';
 
   document.querySelectorAll('.opciones input[type=radio]').forEach(input => {
@@ -736,24 +736,24 @@ function resetFormExceptEmail(newEmail){
     updateProgress();
   }
 
-  document.getElementById('email').value = newEmail;
+  document.getElementById('rut').value = newRut;
   clearLocalDraft();
 }
 
-function handleEmailChange(){
-  let storedEmail = '';
+function handleRutChange(){
+  let storedRut = '';
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
     if(raw){
       const snap = JSON.parse(raw);
-      storedEmail = (snap && snap.mailContacto) ? snap.mailContacto.trim().toLowerCase() : '';
+      storedRut = (snap && snap.rut) ? snap.rut.trim().toUpperCase() : '';
     }
   } catch(e) { /* ignorar */ }
 
-  const typedEmail = document.getElementById('email').value.trim().toLowerCase();
+  const typedRut = document.getElementById('rut').value.trim().toUpperCase();
 
-  if(storedEmail && typedEmail && storedEmail !== typedEmail){
-    resetFormExceptEmail(document.getElementById('email').value.trim());
+  if(storedRut && typedRut && storedRut !== typedRut){
+    resetFormExceptRut(document.getElementById('rut').value.trim());
   }
 }
 
@@ -809,17 +809,17 @@ function restoreLocalDraft(){
 }
 
 function savePartial(){
-  const email = document.getElementById('email').value.trim();
-  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    alert('Para guardar sus respuestas parciales, complete al menos un Mail de Contacto válido en el primer paso.');
+  const rut = document.getElementById('rut').value.trim();
+  if(!rut){
+    alert('Para guardar sus respuestas parciales, complete el RUT en el primer paso.');
     return;
   }
 
   const payload = {
     estado: 'parcial',
     mailEmpresa: document.getElementById('email-empresa').value.trim(),
-    rut: document.getElementById('rut').value.trim(),
-    mailContacto: email,
+    rut: rut,
+    mailContacto: document.getElementById('email').value.trim(),
     telefono: document.getElementById('telefono').value.trim(),
     q0: getRadio('q0'),
     q1: getRadio('q1'),
@@ -870,9 +870,9 @@ function savePartial(){
 updateProgress();
 restoreLocalDraft();
 
-const emailInput = document.getElementById('email');
-if(emailInput){
-  emailInput.addEventListener('blur', handleEmailChange);
+const rutInput = document.getElementById('rut');
+if(rutInput){
+  rutInput.addEventListener('blur', handleRutChange);
 }
 </script>
 </body>
