@@ -420,6 +420,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 </footer>
 
 <script>
+const LOCAL_STORAGE_KEY = 'encuestaMPChile_borrador';
 let currentBloque = 0;
 const totalBloques = 5; // 0-4
 let skipFogape = false;
@@ -552,6 +553,7 @@ function goNext(){
     currentBloque++;
     document.getElementById('bloque-'+currentBloque).classList.add('active');
     updateProgress();
+    saveLocalDraft();
     window.scrollTo({top:0, behavior:'smooth'});
   } else {
     // Submit final
@@ -655,6 +657,7 @@ function getRadio(name) {
 }
 
 function showSuccess() {
+  clearLocalDraft();
   // Meta Pixel - Evento de conversión Purchase al completar el formulario
   if(typeof fbq !== 'undefined') {
     fbq('track', 'Purchase', {
@@ -676,6 +679,89 @@ function showSuccess() {
     document.getElementById(l).classList.add('done');
   });
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function getFormSnapshot(){
+  return {
+    currentBloque: currentBloque,
+    mailEmpresa: document.getElementById('email-empresa').value.trim(),
+    rut: document.getElementById('rut').value.trim(),
+    mailContacto: document.getElementById('email').value.trim(),
+    telefono: document.getElementById('telefono').value.trim(),
+    radios: {
+      q0: getRadioValue('q0'),
+      q1: getRadioValue('q1'),
+      q2: getRadioValue('q2'),
+      q3: getRadioValue('q3'),
+      q3a: getRadioValue('q3a'),
+      q3b: getRadioValue('q3b'),
+      q4: getRadioValue('q4'),
+      q5: getRadioValue('q5'),
+      q6: getRadioValue('q6'),
+      q7: getRadioValue('q7'),
+      q7a: getRadioValue('q7a'),
+      q7b: getRadioValue('q7b'),
+      q8: getRadioValue('q8'),
+      q9: getRadioValue('q9'),
+      q10: getRadioValue('q10')
+    }
+  };
+}
+
+function getRadioValue(name){
+  const checked = document.querySelector(`input[name="${name}"]:checked`);
+  return checked ? checked.value : '';
+}
+
+function saveLocalDraft(){
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(getFormSnapshot()));
+  } catch(e) { /* localStorage no disponible, se ignora */ }
+}
+
+function clearLocalDraft(){
+  try {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  } catch(e) { /* ignorar */ }
+}
+
+function restoreLocalDraft(){
+  let raw;
+  try {
+    raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+  } catch(e) { return; }
+  if(!raw) return;
+
+  let snap;
+  try {
+    snap = JSON.parse(raw);
+  } catch(e) { return; }
+  if(!snap) return;
+
+  document.getElementById('email-empresa').value = snap.mailEmpresa || '';
+  document.getElementById('rut').value = snap.rut || '';
+  document.getElementById('email').value = snap.mailContacto || '';
+  document.getElementById('telefono').value = snap.telefono || '';
+
+  if(snap.radios){
+    Object.keys(snap.radios).forEach(name => {
+      const value = snap.radios[name];
+      if(!value) return;
+      const input = document.querySelector(`input[name="${name}"][value="${CSS.escape(value)}"]`);
+      if(input){
+        input.checked = true;
+        input.closest('.opcion').classList.add('selected');
+        handleConditional(name, value);
+      }
+    });
+  }
+
+  if(typeof snap.currentBloque === 'number' && snap.currentBloque > 0 && snap.currentBloque < totalBloques){
+    document.getElementById('bloque-'+currentBloque).classList.remove('active');
+    currentBloque = snap.currentBloque;
+    document.getElementById('bloque-'+currentBloque).classList.add('active');
+    updateProgress();
+  }
 }
 
 function savePartial(){
@@ -713,6 +799,8 @@ function savePartial(){
   saveBtn.disabled = true;
   saveBtn.textContent = 'Guardando...';
 
+  saveLocalDraft();
+
   fetch('https://script.google.com/macros/s/AKfycbzPhmErQ-kPSSM4OHTKwGScdJxrM4RBPfG6O0HDzSJn8D-BdqsaF7iS69UuzwyeUubm/exec', {
     method: 'POST',
     mode: 'no-cors',
@@ -736,6 +824,7 @@ function savePartial(){
 }
 
 updateProgress();
+restoreLocalDraft();
 </script>
 </body>
 </html>
