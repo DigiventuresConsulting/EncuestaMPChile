@@ -401,29 +401,15 @@ function validateBloque(b){
     return true;
   }
   if(b === 2){
-    const q1 = document.querySelector('input[name="q1"]:checked');
-    if(!q1){ alert('Por favor responda Q1.'); return false; }
-    if(q1.value !== 'no'){
-      if(!document.querySelector('input[name="q2"]:checked')){ alert('Por favor responda Q2.'); return false; }
-      if(!document.querySelector('input[name="q3"]:checked')){ alert('Por favor responda Q3.'); return false; }
-      const q3 = document.querySelector('input[name="q3"]:checked').value;
-      if(q3 === 'clp-uf' && !document.querySelector('input[name="q3a"]:checked')){ alert('Por favor responda Q3.A.'); return false; }
-      if(q3 === 'uf-clp' && !document.querySelector('input[name="q3b"]:checked')){ alert('Por favor responda Q3.B.'); return false; }
-      if(!document.querySelector('input[name="q4"]:checked')){ alert('Por favor responda Q4.'); return false; }
-    }
+    if(!document.querySelector('input[name="q_std_clp"]:checked')){ alert('Por favor responda Q1.'); return false; }
+    if(!document.querySelector('input[name="q_std_uf"]:checked')){ alert('Por favor responda Q2.'); return false; }
+    if(!document.querySelector('input[name="q_std_monto"]:checked')){ alert('Por favor responda Q3.'); return false; }
     return true;
   }
   if(b === 3){
-    const q5 = document.querySelector('input[name="q5"]:checked');
-    if(!q5){ alert('Por favor responda Q5.'); return false; }
-    if(q5.value !== 'no'){
-      if(!document.querySelector('input[name="q6"]:checked')){ alert('Por favor responda Q6.'); return false; }
-      if(!document.querySelector('input[name="q7"]:checked')){ alert('Por favor responda Q7.'); return false; }
-      const q7 = document.querySelector('input[name="q7"]:checked').value;
-      if(q7 === 'clp-uf' && !document.querySelector('input[name="q7a"]:checked')){ alert('Por favor responda Q7.A.'); return false; }
-      if(q7 === 'uf-clp' && !document.querySelector('input[name="q7b"]:checked')){ alert('Por favor responda Q7.B.'); return false; }
-      if(!document.querySelector('input[name="q8"]:checked')){ alert('Por favor responda Q8.'); return false; }
-    }
+    if(!document.querySelector('input[name="q_fogape_clp"]:checked')){ alert('Por favor responda Q4.'); return false; }
+    if(!document.querySelector('input[name="q_fogape_uf"]:checked')){ alert('Por favor responda Q5.'); return false; }
+    if(!document.querySelector('input[name="q_fogape_monto"]:checked')){ alert('Por favor responda Q6.'); return false; }
     return true;
   }
   if(b === 4){
