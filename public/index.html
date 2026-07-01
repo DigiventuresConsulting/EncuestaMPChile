@@ -196,22 +196,16 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <!-- BLOQUE 1: CONTACTO -->
   <div class="bloque" id="bloque-1">
     <div class="bloque-title">Información de Contacto</div>
+    <div class="field" id="f-email">
+      <label>Correo electrónico <span class="req">*</span></label>
+      <input type="email" id="email" placeholder="nombre@empresa.cl">
+    </div>
     <div class="field" id="f-rut">
       <label>RUT <span class="req">*</span></label>
       <input type="text" id="rut" placeholder="00-00000000-0" maxlength="12">
     </div>
-    <div class="grid-2">
-      <div class="field" id="f-email-empresa">
-        <label>Mail Empresa <span class="req">*</span></label>
-        <input type="email" id="email-empresa" placeholder="empresa@ejemplo.cl">
-      </div>
-      <div class="field" id="f-email">
-        <label>Mail Contacto <span class="req">*</span></label>
-        <input type="email" id="email" placeholder="nombre@ejemplo.cl">
-      </div>
-    </div>
     <div class="field" id="f-telefono">
-      <label>Teléfono <span class="req">*</span></label>
+      <label>Teléfono <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
       <input type="tel" id="telefono" placeholder="+56 9 XXXX XXXX">
     </div>
   </div>
@@ -487,20 +481,14 @@ function validateBloque(b){
     return true;
   }
   if(b === 1){
-    const emailEmpresa = document.getElementById('email-empresa').value.trim();
     const rut = document.getElementById('rut').value.trim();
     const email = document.getElementById('email').value.trim();
-    const telefono = document.getElementById('telefono').value.trim();
-    if(!emailEmpresa || !rut || !email || !telefono){
+    if(!rut || !email){
       alert('Por favor complete todos los campos obligatorios.');
       return false;
     }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEmpresa)){
-      alert('Por favor ingrese un email de empresa válido.');
-      return false;
-    }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      alert('Por favor ingrese un email de contacto válido.');
+      alert('Por favor ingrese un email válido.');
       return false;
     }
     return true;
@@ -618,11 +606,12 @@ function submitForm(){
   // Clarity: marcar sesión como encuesta completada
   if(window.clarity){ clarity('set','paso_encuesta','Completada'); clarity('set','encuesta_completada','si'); }
   // Recopilar todas las respuestas
+  const correo = document.getElementById('email').value.trim();
   const payload = {
     estado: 'completo',
-    mailEmpresa: document.getElementById('email-empresa').value.trim(),
+    mailEmpresa: correo,
     rut: document.getElementById('rut').value.trim(),
-    mailContacto: document.getElementById('email').value.trim(),
+    mailContacto: correo,
     telefono: document.getElementById('telefono').value.trim(),
     q0: getRadio('q0'),
     q1: getRadio('q1'),
@@ -695,9 +684,8 @@ function showSuccess() {
 function getFormSnapshot(){
   return {
     currentBloque: currentBloque,
-    mailEmpresa: document.getElementById('email-empresa').value.trim(),
+    correo: document.getElementById('email').value.trim(),
     rut: document.getElementById('rut').value.trim(),
-    mailContacto: document.getElementById('email').value.trim(),
     telefono: document.getElementById('telefono').value.trim(),
     radios: {
       q0: getRadioValue('q0'),
@@ -726,7 +714,6 @@ function getRadioValue(name){
 
 function resetFormExceptRut(newRut){
   // Limpia todos los campos de contacto (excepto el RUT que se está escribiendo) y todas las selecciones
-  document.getElementById('email-empresa').value = '';
   document.getElementById('email').value = '';
   document.getElementById('telefono').value = '';
 
@@ -793,9 +780,8 @@ function restoreLocalDraft(){
   } catch(e) { return; }
   if(!snap) return;
 
-  document.getElementById('email-empresa').value = snap.mailEmpresa || '';
+  document.getElementById('email').value = snap.correo || snap.mailContacto || snap.mailEmpresa || '';
   document.getElementById('rut').value = snap.rut || '';
-  document.getElementById('email').value = snap.mailContacto || '';
   document.getElementById('telefono').value = snap.telefono || '';
 
   if(snap.radios){
@@ -826,11 +812,12 @@ function savePartial(){
     return;
   }
 
+  const correo = document.getElementById('email').value.trim();
   const payload = {
     estado: 'parcial',
-    mailEmpresa: document.getElementById('email-empresa').value.trim(),
+    mailEmpresa: correo,
     rut: rut,
-    mailContacto: document.getElementById('email').value.trim(),
+    mailContacto: correo,
     telefono: document.getElementById('telefono').value.trim(),
     q0: getRadio('q0'),
     q1: getRadio('q1'),
