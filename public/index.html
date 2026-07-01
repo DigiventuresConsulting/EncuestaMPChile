@@ -608,10 +608,6 @@ function resetFormExceptRut(newRut){
     if(opt) opt.classList.remove('selected');
   });
 
-  // Oculta subpreguntas condicionales que pudieran haber quedado visibles
-  ['sq-q2-clp','sq-q2-uf','pq-q3','pq-q4','sq-q3a','sq-q3b',
-   'sq-q6-clp','sq-q6-uf','pq-q7','pq-q8','sq-q7a','sq-q7b'].forEach(hide);
-
   if(currentBloque !== 0){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
     currentBloque = 0;
@@ -677,7 +673,6 @@ function restoreLocalDraft(){
       if(input){
         input.checked = true;
         input.closest('.opcion').classList.add('selected');
-        handleConditional(name, value);
       }
     });
   }
