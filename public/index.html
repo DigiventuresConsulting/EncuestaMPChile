@@ -587,7 +587,8 @@ function updateProgress(){
   const backBtn = document.getElementById('btn-back');
   backBtn.style.visibility = currentBloque > 0 ? 'visible' : 'hidden';
   const nextBtn = document.getElementById('btn-next');
-  nextBtn.textContent = currentBloque === totalBloques - 1 ? 'Enviar encuesta' : 'Continuar →';
+  const textosBoton = ['Comenzar encuesta →','Continuar →','Continuar →','Continuar →','Enviar encuesta'];
+  nextBtn.textContent = textosBoton[currentBloque];
   // Clarity: etiquetar el paso actual para segmentar sesiones por avance
   const nombresPasos = ['Tamaño','Contacto','Capital','FOGAPE','Requisitos'];
   if(window.clarity) clarity('set','paso_encuesta', nombresPasos[currentBloque]);
