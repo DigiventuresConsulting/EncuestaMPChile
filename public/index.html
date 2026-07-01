@@ -116,6 +116,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;
 .btn-save-partial:hover{color:var(--verde-hover);text-decoration:underline}
 .btn-save-partial:disabled{opacity:.5;cursor:not-allowed}
 
+/* TRUST COPY */
+.form-trust{font-size:12px;color:var(--text3);margin-top:16px;line-height:1.6;display:flex;align-items:flex-start;gap:6px}
+.form-trust span{flex-shrink:0}
+
 /* ERROR */
 .error-msg{font-size:12px;color:var(--red);margin-top:4px;display:none}
 .field.error input,.pregunta.error .opciones{outline:2px solid var(--red);border-radius:var(--radius-sm)}
@@ -208,6 +212,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
       <label>Teléfono <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
       <input type="tel" id="telefono" placeholder="+56 9 XXXX XXXX">
     </div>
+    <p class="form-trust"><span>🔒</span> Sus datos son confidenciales y se usan únicamente para este estudio. No los compartimos con bancos ni terceros. Le tomará 2 minutos.</p>
   </div>
 
   <!-- BLOQUE 2: CAPITAL DE TRABAJO -->
