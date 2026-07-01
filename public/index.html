@@ -4,14 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Encuesta MP Chile</title>
-<!-- Microsoft Clarity -->
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xfmowdipnt");
-</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -147,6 +139,16 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<!-- Google tag (gtag.js) GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X7G5QFC5L0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X7G5QFC5L0');
+</script>
+<!-- End GA4 -->
 </head>
 <body>
 
@@ -541,6 +543,10 @@ function validateBloque(b){
 
 function goNext(){
   if(!validateBloque(currentBloque)) return;
+
+  // Nombres de etapas para GA4
+  const etapas = ['Contacto', 'Tamaño', 'Capital', 'FOGAPE', 'Requisitos'];
+
   // Evento Meta Pixel solo en el primer botón Continuar (paso Contacto)
   if(currentBloque === 0 && typeof fbq !== 'undefined') {
     fbq('trackCustom', 'InicioEncuesta', {
@@ -554,6 +560,16 @@ function goNext(){
       tamanio: getRadio('q0')
     });
   }
+
+  // Evento GA4 por cada etapa completada
+  if(typeof gtag !== 'undefined') {
+    gtag('event', 'etapa_completada', {
+      etapa_numero: currentBloque + 1,
+      etapa_nombre: etapas[currentBloque] || 'Desconocida',
+      form_name: 'Encuesta MP Chile'
+    });
+  }
+
   if(currentBloque < totalBloques - 1){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
     currentBloque++;
@@ -595,9 +611,6 @@ function updateProgress(){
   backBtn.style.visibility = currentBloque > 0 ? 'visible' : 'hidden';
   const nextBtn = document.getElementById('btn-next');
   nextBtn.textContent = currentBloque === totalBloques - 1 ? 'Enviar encuesta' : 'Continuar →';
-  // Clarity: etiquetar el paso actual para segmentar sesiones por avance
-  const nombresPasos = ['Contacto','Tamaño','Capital','FOGAPE','Requisitos'];
-  if(window.clarity) clarity('set','paso_encuesta', nombresPasos[currentBloque]);
 }
 
 function submitForm(){
@@ -615,8 +628,6 @@ function submitForm(){
     document.getElementById(l).classList.add('done');
   });
   window.scrollTo({top:0,behavior:'smooth'});
-  // Clarity: marcar sesión como encuesta completada
-  if(window.clarity){ clarity('set','paso_encuesta','Completada'); clarity('set','encuesta_completada','si'); }
   // Recopilar todas las respuestas
   const payload = {
     estado: 'completo',
@@ -675,6 +686,13 @@ function showSuccess() {
       value: 0,
       currency: 'CLP',
       content_name: 'Encuesta MP Chile Completada'
+    });
+  }
+  // GA4 - Evento de conversión al completar el formulario
+  if(typeof gtag !== 'undefined') {
+    gtag('event', 'form_completado', {
+      form_name: 'Encuesta MP Chile',
+      value: 1
     });
   }
   document.getElementById('bloque-4').classList.remove('active');
