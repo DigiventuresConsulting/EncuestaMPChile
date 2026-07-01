@@ -13,15 +13,16 @@
     })(window, document, "clarity", "script", "xfmowdipnt");
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --verde:#1d5c2e;--verde-light:#2d7a3a;--verde-hover:#164a24;
-  --verde-accent:#7ec832;--text:#1a2820;--text2:#4a5a50;--text3:#8a9a90;
-  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eceae6;
-  --border:#d8d6d0;--border2:#c0bdb5;
-  --red:#c0392b;--radius:14px;--radius-sm:8px;
+  --verde:#1A5C30;--verde-light:#3A8A40;--verde-hover:#154a26;
+  --verde-accent:#8DC83C;--text:#0D1B2A;--text2:#4A5259;--text3:#8A9199;
+  --bg:#ffffff;--bg2:#F5F6F4;--bg3:#E8EAEB;
+  --border:#E8EAEB;--border2:#CDD0D2;
+  --red:#c0392b;--radius:16px;--radius-sm:8px;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;background:#ffffff;color:var(--text);min-height:100vh;font-size:16px;line-height:1.5}
+body{font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#ffffff;color:var(--text);min-height:100vh;font-size:16px;line-height:1.5}
 
 /* HEADER */
 .header{padding:18px 40px 4px;background:#ffffff;border-bottom:none;display:flex;justify-content:center;align-items:center}
@@ -122,8 +123,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;
 .nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
 .btn-back{font-size:13px;font-weight:500;color:var(--text2);background:none;border:none;cursor:pointer;padding:10px 0;display:flex;align-items:center;gap:6px}
 .btn-back:hover{color:var(--text)}
-.btn-next{background:var(--verde);color:#fff;border:none;border-radius:var(--radius-sm);padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s;letter-spacing:.01em}
+.btn-next{background:var(--verde);color:#fff;border:none;border-radius:999px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s,transform .15s;letter-spacing:.01em}
 .btn-next:hover{background:var(--verde-hover)}
+.btn-next:active{transform:translateY(1px)}
 .btn-next:disabled{opacity:.4;cursor:not-allowed}
 .btn-save-partial{display:block;width:100%;text-align:center;background:none;border:none;color:var(--verde-light);font-size:13px;font-weight:600;cursor:pointer;margin-top:12px;padding:6px 0;transition:color .15s}
 .btn-save-partial:hover{color:var(--verde-hover);text-decoration:underline}
