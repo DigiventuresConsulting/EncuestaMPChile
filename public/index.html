@@ -167,9 +167,9 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <!-- PROGRESS BAR -->
   <div class="progress-wrap">
     <div class="progress" id="progress-bar">
-      <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Contacto</span></div>
+      <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Tamaño</span></div>
       <div class="step-line" id="line-1-2"></div>
-      <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Tamaño</span></div>
+      <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Contacto</span></div>
       <div class="step-line" id="line-2-3"></div>
       <div class="step-circle pending" id="step-3"><span>3</span><span class="step-label">Capital</span></div>
       <div class="step-line" id="line-3-4"></div>
@@ -179,8 +179,22 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- BLOQUE 0: CONTACTO -->
+  <!-- BLOQUE 0: TAMAÑO -->
   <div class="bloque active" id="bloque-0">
+    <div class="bloque-title">Caracterización de la Empresa</div>
+    <div class="pregunta" id="pq-q0">
+      <div class="pregunta-label">Q0. Tamaño de la Empresa (Facturación Anual Neta)</div>
+      <div class="opciones">
+        <label class="opcion"><input type="radio" name="q0" value="micro"> <span class="opcion-text"><strong>Microempresa:</strong> Hasta 2.400 UF (Hasta $105.000 USD)</span></label>
+        <label class="opcion"><input type="radio" name="q0" value="pequena"> <span class="opcion-text"><strong>Pequeña Empresa:</strong> Entre 2.401 y 25.000 UF (De $105.000 a $1,1 Millones USD)</span></label>
+        <label class="opcion"><input type="radio" name="q0" value="mediana"> <span class="opcion-text"><strong>Mediana Empresa:</strong> Entre 25.001 y 100.000 UF (De $1,1 a $4,4 Millones USD)</span></label>
+        <label class="opcion"><input type="radio" name="q0" value="gran"> <span class="opcion-text"><strong>Gran Empresa:</strong> Más de 100.000 UF (Más de $4,4 Millones USD)</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 1: CONTACTO -->
+  <div class="bloque" id="bloque-1">
     <div class="bloque-title">Información de Contacto</div>
     <div class="field" id="f-rut">
       <label>RUT <span class="req">*</span></label>
@@ -199,20 +213,6 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     <div class="field" id="f-telefono">
       <label>Teléfono <span class="req">*</span></label>
       <input type="tel" id="telefono" placeholder="+56 9 XXXX XXXX">
-    </div>
-  </div>
-
-  <!-- BLOQUE 1: TAMAÑO -->
-  <div class="bloque" id="bloque-1">
-    <div class="bloque-title">Caracterización de la Empresa</div>
-    <div class="pregunta" id="pq-q0">
-      <div class="pregunta-label">Q0. Tamaño de la Empresa (Facturación Anual Neta)</div>
-      <div class="opciones">
-        <label class="opcion"><input type="radio" name="q0" value="micro"> <span class="opcion-text"><strong>Microempresa:</strong> Hasta 2.400 UF (Hasta $105.000 USD)</span></label>
-        <label class="opcion"><input type="radio" name="q0" value="pequena"> <span class="opcion-text"><strong>Pequeña Empresa:</strong> Entre 2.401 y 25.000 UF (De $105.000 a $1,1 Millones USD)</span></label>
-        <label class="opcion"><input type="radio" name="q0" value="mediana"> <span class="opcion-text"><strong>Mediana Empresa:</strong> Entre 25.001 y 100.000 UF (De $1,1 a $4,4 Millones USD)</span></label>
-        <label class="opcion"><input type="radio" name="q0" value="gran"> <span class="opcion-text"><strong>Gran Empresa:</strong> Más de 100.000 UF (Más de $4,4 Millones USD)</span></label>
-      </div>
     </div>
   </div>
 
@@ -481,6 +481,12 @@ function clearRadios(name){ document.querySelectorAll(`input[name="${name}"]`).f
 
 function validateBloque(b){
   if(b === 0){
+    if(!document.querySelector('input[name="q0"]:checked')){
+      alert('Por favor seleccione el tamaño de su empresa.'); return false;
+    }
+    return true;
+  }
+  if(b === 1){
     const emailEmpresa = document.getElementById('email-empresa').value.trim();
     const rut = document.getElementById('rut').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -496,12 +502,6 @@ function validateBloque(b){
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
       alert('Por favor ingrese un email de contacto válido.');
       return false;
-    }
-    return true;
-  }
-  if(b === 1){
-    if(!document.querySelector('input[name="q0"]:checked')){
-      alert('Por favor seleccione el tamaño de su empresa.'); return false;
     }
     return true;
   }
@@ -541,17 +541,17 @@ function validateBloque(b){
 
 function goNext(){
   if(!validateBloque(currentBloque)) return;
-  // Evento Meta Pixel solo en el primer botón Continuar (paso Contacto)
+  // Evento Meta Pixel en el primer botón Continuar (paso Tamaño)
   if(currentBloque === 0 && typeof fbq !== 'undefined') {
     fbq('trackCustom', 'InicioEncuesta', {
-      content_name: 'Encuesta MP Chile'
+      content_name: 'Encuesta MP Chile',
+      tamanio: getRadio('q0')
     });
   }
-  // Evento Meta Pixel en el botón Continuar del paso Tamaño
+  // Evento Meta Pixel en el botón Continuar del paso Contacto
   if(currentBloque === 1 && typeof fbq !== 'undefined') {
     fbq('trackCustom', 'IniciarPago', {
-      content_name: 'Encuesta MP Chile - Tamaño completado',
-      tamanio: getRadio('q0')
+      content_name: 'Encuesta MP Chile - Contacto completado'
     });
   }
   if(currentBloque < totalBloques - 1){
@@ -596,7 +596,7 @@ function updateProgress(){
   const nextBtn = document.getElementById('btn-next');
   nextBtn.textContent = currentBloque === totalBloques - 1 ? 'Enviar encuesta' : 'Continuar →';
   // Clarity: etiquetar el paso actual para segmentar sesiones por avance
-  const nombresPasos = ['Contacto','Tamaño','Capital','FOGAPE','Requisitos'];
+  const nombresPasos = ['Tamaño','Contacto','Capital','FOGAPE','Requisitos'];
   if(window.clarity) clarity('set','paso_encuesta', nombresPasos[currentBloque]);
 }
 
