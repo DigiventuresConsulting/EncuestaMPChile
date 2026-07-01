@@ -368,7 +368,6 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 const LOCAL_STORAGE_KEY = 'encuestaMPChile_borrador';
 let currentBloque = 0;
 const totalBloques = 5; // 0-4
-let skipFogape = false;
 
 // Estilo visual opciones al seleccionar
 document.querySelectorAll('.opcion input[type=radio]').forEach(radio => {
@@ -378,45 +377,8 @@ document.querySelectorAll('.opcion input[type=radio]').forEach(radio => {
       r.closest('.opcion').classList.remove('selected');
     });
     this.closest('.opcion').classList.add('selected');
-    handleConditional(name, this.value);
   });
 });
-
-function handleConditional(name, value){
-  if(name === 'q1'){
-    // Mostrar Q2 según modalidad
-    hide('sq-q2-clp'); hide('sq-q2-uf');
-    hide('pq-q3'); hide('pq-q4');
-    hide('sq-q3a'); hide('sq-q3b');
-    clearRadios('q2'); clearRadios('q3'); clearRadios('q3a'); clearRadios('q3b');
-    if(value === 'clp'){ show('sq-q2-clp'); show('pq-q3'); show('pq-q4'); }
-    if(value === 'uf'){ show('sq-q2-uf'); show('pq-q3'); show('pq-q4'); }
-    if(value === 'no'){ skipFogape = false; } // no salta, continúa a bloque FOGAPE
-  }
-  if(name === 'q3'){
-    hide('sq-q3a'); hide('sq-q3b');
-    if(value === 'clp-uf') show('sq-q3a');
-    if(value === 'uf-clp') show('sq-q3b');
-  }
-  if(name === 'q5'){
-    hide('sq-q6-clp'); hide('sq-q6-uf');
-    hide('pq-q7'); hide('pq-q8');
-    hide('sq-q7a'); hide('sq-q7b');
-    clearRadios('q6'); clearRadios('q7'); clearRadios('q7a'); clearRadios('q7b');
-    if(value === 'clp'){ show('sq-q6-clp'); show('pq-q7'); show('pq-q8'); }
-    if(value === 'uf'){ show('sq-q6-uf'); show('pq-q7'); show('pq-q8'); }
-    if(value === 'no'){ skipFogape = true; }
-  }
-  if(name === 'q7'){
-    hide('sq-q7a'); hide('sq-q7b');
-    if(value === 'clp-uf') show('sq-q7a');
-    if(value === 'uf-clp') show('sq-q7b');
-  }
-}
-
-function show(id){ const el=document.getElementById(id); if(el){ el.style.display='block'; el.classList.add('visible'); }}
-function hide(id){ const el=document.getElementById(id); if(el){ el.style.display='none'; el.classList.remove('visible'); }}
-function clearRadios(name){ document.querySelectorAll(`input[name="${name}"]`).forEach(r=>{ r.checked=false; r.closest('.opcion').classList.remove('selected'); }); }
 
 function validateBloque(b){
   if(b === 0){
