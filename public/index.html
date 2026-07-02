@@ -374,6 +374,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 <script>
 const LOCAL_STORAGE_KEY = 'encuestaMPChile_borrador';
 const DRAFT_ID_KEY = 'encuestaMPChile_draftId';
+const COMPLETED_KEY = 'encuestaMPChile_completada';
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec';
 let currentBloque = 0;
 const totalBloques = 5; // 0-4
@@ -560,6 +561,9 @@ function getRadio(name) {
 
 function showSuccess() {
   clearLocalDraft();
+  // Marca la encuesta como completada para bloquear reenvíos en próximas visitas
+  // (clave separada que clearLocalDraft NO borra).
+  try { localStorage.setItem(COMPLETED_KEY, '1'); } catch(e) { /* ignorar */ }
   // Meta Pixel - Evento de conversión Purchase al completar el formulario
   if(typeof fbq !== 'undefined') {
     fbq('track', 'Purchase', {
@@ -568,7 +572,13 @@ function showSuccess() {
       content_name: 'Encuesta MP Chile Completada'
     });
   }
-  document.getElementById('bloque-4').classList.remove('active');
+  renderCompleted();
+}
+
+// Muestra la pantalla de "gracias / respuesta registrada" y deja el progreso en
+// completo. La usan tanto el envío final como el lock al reingresar.
+function renderCompleted() {
+  document.querySelector('.bloque.active')?.classList.remove('active');
   document.getElementById('success').classList.add('show');
   document.getElementById('nav-btns').style.display = 'none';
   ['step-1','step-2','step-3','step-4','step-5'].forEach(s=>{
@@ -580,6 +590,10 @@ function showSuccess() {
     document.getElementById(l).classList.add('done');
   });
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function isEncuestaCompletada(){
+  try { return localStorage.getItem(COMPLETED_KEY) === '1'; } catch(e) { return false; }
 }
 
 function getFormSnapshot(){
@@ -753,7 +767,13 @@ function restoreLocalDraft(){
 }
 
 updateProgress();
-restoreLocalDraft();
+if(isEncuestaCompletada()){
+  // Ya respondió en una visita anterior: mostramos la pantalla de gracias en
+  // lugar del formulario (no restauramos borrador ni permitimos reenviar).
+  renderCompleted();
+} else {
+  restoreLocalDraft();
+}
 
 const rutInput = document.getElementById('rut');
 if(rutInput){
