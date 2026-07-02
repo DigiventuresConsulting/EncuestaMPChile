@@ -134,9 +134,6 @@ body{font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif
 .btn-next:hover{background:var(--verde-hover)}
 .btn-next:active{transform:translateY(1px)}
 .btn-next:disabled{opacity:.4;cursor:not-allowed}
-.btn-save-partial{display:block;width:100%;text-align:center;background:none;border:none;color:var(--verde-light);font-size:13px;font-weight:600;cursor:pointer;margin-top:12px;padding:6px 0;transition:color .15s}
-.btn-save-partial:hover{color:var(--verde-hover);text-decoration:underline}
-.btn-save-partial:disabled{opacity:.5;cursor:not-allowed}
 
 /* TRUST COPY */
 .form-trust{font-size:12px;color:var(--text3);margin-top:16px;line-height:1.6;display:flex;align-items:flex-start;gap:6px}
@@ -196,13 +193,13 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     <div class="progress" id="progress-bar">
       <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Tamaño</span></div>
       <div class="step-line" id="line-1-2"></div>
-      <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Contacto</span></div>
+      <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Capital</span></div>
       <div class="step-line" id="line-2-3"></div>
-      <div class="step-circle pending" id="step-3"><span>3</span><span class="step-label">Capital</span></div>
+      <div class="step-circle pending" id="step-3"><span>3</span><span class="step-label">FOGAPE</span></div>
       <div class="step-line" id="line-3-4"></div>
-      <div class="step-circle pending" id="step-4"><span>4</span><span class="step-label">FOGAPE</span></div>
+      <div class="step-circle pending" id="step-4"><span>4</span><span class="step-label">Garantías</span></div>
       <div class="step-line" id="line-4-5"></div>
-      <div class="step-circle pending" id="step-5"><span>5</span><span class="step-label">Garantías</span></div>
+      <div class="step-circle pending" id="step-5"><span>5</span><span class="step-label">Contacto</span></div>
     </div>
     <div class="step-label-mobile" id="step-label-mobile"></div>
   </div>
@@ -221,8 +218,8 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- BLOQUE 1: CONTACTO -->
-  <div class="bloque" id="bloque-1">
+  <!-- BLOQUE 4: CONTACTO (último paso) -->
+  <div class="bloque" id="bloque-4">
     <div class="bloque-title">Información de Contacto</div>
     <div class="field" id="f-email">
       <label>Correo electrónico <span class="req">*</span></label>
@@ -240,8 +237,8 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     <p class="form-trust"><span>🔒</span> Sus datos son confidenciales y se usan únicamente para este estudio. No los compartimos con bancos ni terceros. Le tomará 2 minutos.</p>
   </div>
 
-  <!-- BLOQUE 2: CAPITAL DE TRABAJO -->
-  <div class="bloque" id="bloque-2">
+  <!-- BLOQUE 1: CAPITAL DE TRABAJO -->
+  <div class="bloque" id="bloque-1">
     <span class="bloque-tag">Bloque 1</span>
     <div class="bloque-title">Préstamo de Capital de Trabajo Estándar (Sin Garantía)</div>
 
@@ -285,8 +282,8 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- BLOQUE 3: FOGAPE -->
-  <div class="bloque" id="bloque-3">
+  <!-- BLOQUE 2: FOGAPE -->
+  <div class="bloque" id="bloque-2">
     <span class="bloque-tag">Bloque 2</span>
     <div class="bloque-title">Préstamos con Garantía Estatal (FOGAPE)</div>
 
@@ -329,8 +326,8 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- BLOQUE 4: REQUISITOS -->
-  <div class="bloque" id="bloque-4">
+  <!-- BLOQUE 3: REQUISITOS (Garantías) -->
+  <div class="bloque" id="bloque-3">
     <span class="bloque-tag">Bloque 3</span>
     <div class="bloque-title">Garantías y Colaterales Exigidos</div>
 
@@ -366,7 +363,6 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     <button class="btn-back" id="btn-back" onclick="goBack()" style="visibility:hidden">← Anterior</button>
     <button class="btn-next" id="btn-next" onclick="goNext()">Continuar →</button>
   </div>
-  <button class="btn-save-partial" id="btn-save-partial" onclick="savePartial()">Guardar y continuar más tarde</button>
 
 </div>
 </div>
@@ -377,8 +373,11 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 
 <script>
 const LOCAL_STORAGE_KEY = 'encuestaMPChile_borrador';
+const DRAFT_ID_KEY = 'encuestaMPChile_draftId';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec';
 let currentBloque = 0;
 const totalBloques = 5; // 0-4
+let draftId = getOrCreateDraftId();
 
 // Estilo visual opciones al seleccionar
 document.querySelectorAll('.opcion input[type=radio]').forEach(radio => {
@@ -426,17 +425,17 @@ function showError(containerId, msg){
 }
 function validateBloque(b){
   clearErrors();
-  // Obligatorios: email (Contacto) y el Bloque 1 de Capital de Trabajo. FOGAPE y Garantías son opcionales.
+  // Obligatorios: Bloque 1 de Capital de Trabajo (paso 1) y email (Contacto, paso final). FOGAPE y Garantías son opcionales.
   if(b === 1){
-    const email = document.getElementById('email').value.trim();
-    if(!email) return showError('f-email','Ingrese su correo electrónico.');
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('f-email','Ingrese un correo válido (ej.: nombre@empresa.cl).');
-    return true;
-  }
-  if(b === 2){
     if(!document.querySelector('input[name="q_std_clp"]:checked')) return showError('pq-q-std-clp','Seleccione una opción para continuar.');
     if(!document.querySelector('input[name="q_std_uf"]:checked')) return showError('pq-q-std-uf','Seleccione una opción para continuar.');
     if(!document.querySelector('input[name="q_std_monto"]:checked')) return showError('pq-q-std-monto','Seleccione una opción para continuar.');
+    return true;
+  }
+  if(b === 4){
+    const email = document.getElementById('email').value.trim();
+    if(!email) return showError('f-email','Ingrese su correo electrónico.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('f-email','Ingrese un correo válido (ej.: nombre@empresa.cl).');
     return true;
   }
   return true;
@@ -451,8 +450,8 @@ function goNext(){
       tamanio: getRadio('q0')
     });
   }
-  // Evento Meta Pixel en el botón Continuar del paso Contacto
-  if(currentBloque === 1 && typeof fbq !== 'undefined') {
+  // Evento Meta Pixel en el botón del paso Contacto (ahora es el último paso, al enviar)
+  if(currentBloque === 4 && typeof fbq !== 'undefined') {
     fbq('trackCustom', 'IniciarPago', {
       content_name: 'Encuesta MP Chile - Contacto completado'
     });
@@ -463,6 +462,7 @@ function goNext(){
     document.getElementById('bloque-'+currentBloque).classList.add('active');
     updateProgress();
     saveLocalDraft();
+    autosaveStep();
     scrollToForm();
   } else {
     // Submit final
@@ -506,7 +506,7 @@ function updateProgress(){
   const textosBoton = ['Comenzar encuesta →','Continuar →','Continuar →','Continuar →','Enviar y recibir mi informe →'];
   nextBtn.textContent = textosBoton[currentBloque];
   // Clarity: etiquetar el paso actual para segmentar sesiones por avance
-  const nombresPasos = ['Tamaño','Contacto','Capital','FOGAPE','Garantías'];
+  const nombresPasos = ['Tamaño','Capital','FOGAPE','Garantías','Contacto'];
   if(window.clarity) clarity('set','paso_encuesta', nombresPasos[currentBloque]);
   // Indicador de paso para mobile (los step-label individuales se ocultan en <600px)
   const stepLabelMobile = document.getElementById('step-label-mobile');
@@ -517,7 +517,6 @@ function submitForm(){
   document.getElementById('bloque-4').classList.remove('active');
   document.getElementById('success').classList.add('show');
   document.getElementById('nav-btns').style.display = 'none';
-  document.getElementById('btn-save-partial').style.display = 'none';
   // Actualizar progress a completo
   ['step-1','step-2','step-3','step-4','step-5'].forEach(s=>{
     const el=document.getElementById(s);
@@ -531,30 +530,14 @@ function submitForm(){
   // Clarity: marcar sesión como encuesta completada
   if(window.clarity){ clarity('set','paso_encuesta','Completada'); clarity('set','encuesta_completada','si'); }
   // Recopilar todas las respuestas
-  const correo = document.getElementById('email').value.trim();
-  const payload = {
-    estado: 'completo',
-    mailEmpresa: correo,
-    rut: document.getElementById('rut').value.trim(),
-    mailContacto: correo,
-    telefono: document.getElementById('telefono').value.trim(),
-    q0: getRadio('q0'),
-    q_std_clp: getRadio('q_std_clp'),
-    q_std_uf: getRadio('q_std_uf'),
-    q_std_monto: getRadio('q_std_monto'),
-    q_fogape_clp: getRadio('q_fogape_clp'),
-    q_fogape_uf: getRadio('q_fogape_uf'),
-    q_fogape_monto: getRadio('q_fogape_monto'),
-    q9: getRadio('q9'),
-    q10: getRadio('q10')
-  };
+  const payload = Object.assign({ estado: 'completo', draftId: draftId }, collectAnswers());
 
   // Enviar a Google Sheets via Apps Script
   const btn = document.getElementById('btn-next');
   btn.disabled = true;
   btn.textContent = 'Enviando...';
 
-  fetch('https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec', {
+  fetch(ENDPOINT, {
     method: 'POST',
     mode: 'no-cors',
     headers: {'Content-Type': 'application/json'},
@@ -588,7 +571,6 @@ function showSuccess() {
   document.getElementById('bloque-4').classList.remove('active');
   document.getElementById('success').classList.add('show');
   document.getElementById('nav-btns').style.display = 'none';
-  document.getElementById('btn-save-partial').style.display = 'none';
   ['step-1','step-2','step-3','step-4','step-5'].forEach(s=>{
     const el=document.getElementById(s);
     el.classList.remove('active','pending');
@@ -673,7 +655,64 @@ function saveLocalDraft(){
 function clearLocalDraft(){
   try {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.removeItem(DRAFT_ID_KEY);
   } catch(e) { /* ignorar */ }
+  // Regenera un id nuevo para el próximo borrador (nuevo respondente / nueva sesión)
+  draftId = getOrCreateDraftId();
+}
+
+function generateId(){
+  try {
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  } catch(e) { /* fallback abajo */ }
+  return 'd_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,10);
+}
+
+function getOrCreateDraftId(){
+  try {
+    let id = localStorage.getItem(DRAFT_ID_KEY);
+    if(!id){ id = generateId(); localStorage.setItem(DRAFT_ID_KEY, id); }
+    return id;
+  } catch(e) {
+    return generateId();
+  }
+}
+
+// Campos compartidos por el guardado parcial, el autosave y el envío final
+function collectAnswers(){
+  const correo = document.getElementById('email').value.trim();
+  return {
+    mailEmpresa: correo,
+    rut: document.getElementById('rut').value.trim(),
+    mailContacto: correo,
+    telefono: document.getElementById('telefono').value.trim(),
+    q0: getRadio('q0'),
+    q_std_clp: getRadio('q_std_clp'),
+    q_std_uf: getRadio('q_std_uf'),
+    q_std_monto: getRadio('q_std_monto'),
+    q_fogape_clp: getRadio('q_fogape_clp'),
+    q_fogape_uf: getRadio('q_fogape_uf'),
+    q_fogape_monto: getRadio('q_fogape_monto'),
+    q9: getRadio('q9'),
+    q10: getRadio('q10')
+  };
+}
+
+// Autosave silencioso al avanzar de paso: persiste server-side todo lo respondido
+// hasta el momento (fire-and-forget, sin feedback visual). Dedup por draftId en la planilla.
+function autosaveStep(){
+  const answers = collectAnswers();
+  const hayAlgo = Object.keys(answers).some(k => answers[k]);
+  if(!hayAlgo) return; // no mandamos filas totalmente vacías
+  const payload = Object.assign({ estado: 'parcial', draftId: draftId }, answers);
+  try {
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { /* fire-and-forget */ }
 }
 
 function restoreLocalDraft(){
@@ -711,60 +750,6 @@ function restoreLocalDraft(){
     document.getElementById('bloque-'+currentBloque).classList.add('active');
     updateProgress();
   }
-}
-
-function savePartial(){
-  const rut = document.getElementById('rut').value.trim();
-  if(!rut){
-    alert('Para guardar sus respuestas parciales, complete el RUT en el primer paso.');
-    return;
-  }
-
-  const correo = document.getElementById('email').value.trim();
-  const payload = {
-    estado: 'parcial',
-    mailEmpresa: correo,
-    rut: rut,
-    mailContacto: correo,
-    telefono: document.getElementById('telefono').value.trim(),
-    q0: getRadio('q0'),
-    q_std_clp: getRadio('q_std_clp'),
-    q_std_uf: getRadio('q_std_uf'),
-    q_std_monto: getRadio('q_std_monto'),
-    q_fogape_clp: getRadio('q_fogape_clp'),
-    q_fogape_uf: getRadio('q_fogape_uf'),
-    q_fogape_monto: getRadio('q_fogape_monto'),
-    q9: getRadio('q9'),
-    q10: getRadio('q10')
-  };
-
-  const saveBtn = document.getElementById('btn-save-partial');
-  const originalText = saveBtn.textContent;
-  saveBtn.disabled = true;
-  saveBtn.textContent = 'Guardando...';
-
-  saveLocalDraft();
-
-  fetch('https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
-  })
-  .then(() => {
-    saveBtn.textContent = '✓ Respuestas guardadas';
-    setTimeout(() => {
-      saveBtn.disabled = false;
-      saveBtn.textContent = originalText;
-    }, 2500);
-  })
-  .catch(() => {
-    saveBtn.textContent = '✓ Respuestas guardadas';
-    setTimeout(() => {
-      saveBtn.disabled = false;
-      saveBtn.textContent = originalText;
-    }, 2500);
-  });
 }
 
 updateProgress();
