@@ -170,6 +170,15 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<!-- Google tag (gtag.js) GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X7G5QFC5L0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X7G5QFC5L0');
+</script>
+<!-- End GA4 -->
 </head>
 <body>
 
@@ -444,6 +453,16 @@ function validateBloque(b){
 
 function goNext(){
   if(!validateBloque(currentBloque)) return;
+  // GA4: etapa completada (nombres/params idénticos a la otra branch para comparar).
+  // Array reordenado al flujo real de ESTA branch (Contacto al final tras el refactor).
+  const etapas = ['Tamaño', 'Capital', 'FOGAPE', 'Requisitos', 'Contacto'];
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'etapa_completada', {
+      etapa_numero: currentBloque + 1,
+      etapa_nombre: etapas[currentBloque] || 'Desconocida',
+      form_name: 'Encuesta MP Chile'
+    });
+  }
   // Evento Meta Pixel en el primer botón Continuar (paso Tamaño)
   if(currentBloque === 0 && typeof fbq !== 'undefined') {
     fbq('trackCustom', 'InicioEncuesta', {
@@ -570,6 +589,13 @@ function showSuccess() {
       value: 0,
       currency: 'CLP',
       content_name: 'Encuesta MP Chile Completada'
+    });
+  }
+  // GA4: conversión al completar la encuesta (solo en el envío real, no en el lock de reingreso)
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'form_completado', {
+      form_name: 'Encuesta MP Chile',
+      value: 1
     });
   }
   renderCompleted();
