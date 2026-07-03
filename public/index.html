@@ -13,15 +13,16 @@
     })(window, document, "clarity", "script", "xfmowdipnt");
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --verde:#1d5c2e;--verde-light:#2d7a3a;--verde-hover:#164a24;
-  --verde-accent:#7ec832;--text:#1a2820;--text2:#4a5a50;--text3:#8a9a90;
-  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eceae6;
-  --border:#d8d6d0;--border2:#c0bdb5;
-  --red:#c0392b;--radius:14px;--radius-sm:8px;
+  --verde:#1A5C30;--verde-light:#3A8A40;--verde-hover:#154a26;
+  --verde-accent:#8DC83C;--text:#0D1B2A;--text2:#4A5259;--text3:#8A9199;
+  --bg:#ffffff;--bg2:#F5F6F4;--bg3:#E8EAEB;
+  --border:#E8EAEB;--border2:#CDD0D2;
+  --red:#c0392b;--radius:16px;--radius-sm:8px;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;background:#ffffff;color:var(--text);min-height:100vh;font-size:16px;line-height:1.5}
+body{font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#ffffff;color:var(--text);min-height:100vh;font-size:16px;line-height:1.5}
 
 /* HEADER */
 .header{padding:18px 40px 4px;background:#ffffff;border-bottom:none;display:flex;justify-content:center;align-items:center}
@@ -56,23 +57,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;
 .step-label{position:absolute;top:40px;left:50%;transform:translateX(-50%);font-size:11px;white-space:nowrap;color:var(--text3);font-weight:500}
 .step-circle.active .step-label{color:var(--verde-accent)}
 .step-circle.done .step-label{color:var(--verde)}
+.step-label-mobile{display:none;text-align:center;font-size:12px;color:var(--text3);font-weight:600;margin-top:10px}
 .progress-wrap{position:relative;margin-bottom:20px}
 
 /* BLOQUES */
 .bloque{display:none}
 .bloque.active{display:block}
 .bloque-title{font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text);margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid var(--verde)}
-.bloque-tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:var(--verde);color:#fff;border-radius:4px;padding:3px 8px;margin-bottom:16px}
 
 /* GRID */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:600px){.grid-2{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .grid-2{grid-template-columns:1fr}
+  .header{padding:14px 20px 4px}
+  .logo img{height:56px}
+  .hero{padding:32px 20px 24px}
+  .intro-section{padding:4px 20px 6px;text-align:left}
+  .form-wrap{padding:0 16px 60px}
+  .form-card{padding:24px 20px}
+  .btn-back{min-height:48px}
+  .btn-next{min-height:48px}
+  .step-label{display:none}
+  .step-label-mobile{display:block}
+  /* Compactar opciones para que entren más por pantalla */
+  .opciones{gap:6px}
+  .opcion{padding:8px 12px}
+  .opcion-text{font-size:12px;line-height:1.4}
+  .pregunta{margin-bottom:18px}
+  /* Botón Continuar siempre visible al scrollear las listas largas */
+  .nav-btns{position:sticky;bottom:0;background:var(--bg2);margin:24px -20px 0;padding:14px 20px;box-shadow:0 -4px 12px rgba(0,0,0,.07)}
+}
 
 /* CAMPOS */
 .field{margin-bottom:20px}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
 .field label .req{color:var(--red);margin-left:2px}
-.field input[type=text],.field input[type=email],.field input[type=tel]{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
+.field input[type=text],.field input[type=email],.field input[type=tel]{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:16px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
 .field input:focus{border-color:var(--verde-light)}
 .field input::placeholder{color:var(--text3)}
 
@@ -109,12 +129,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif;
 .nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
 .btn-back{font-size:13px;font-weight:500;color:var(--text2);background:none;border:none;cursor:pointer;padding:10px 0;display:flex;align-items:center;gap:6px}
 .btn-back:hover{color:var(--text)}
-.btn-next{background:var(--verde);color:#fff;border:none;border-radius:var(--radius-sm);padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s;letter-spacing:.01em}
+.btn-next{background:var(--verde);color:#fff;border:none;border-radius:999px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s,transform .15s;letter-spacing:.01em}
 .btn-next:hover{background:var(--verde-hover)}
+.btn-next:active{transform:translateY(1px)}
 .btn-next:disabled{opacity:.4;cursor:not-allowed}
-.btn-save-partial{display:block;width:100%;text-align:center;background:none;border:none;color:var(--verde-light);font-size:13px;font-weight:600;cursor:pointer;margin-top:12px;padding:6px 0;transition:color .15s}
-.btn-save-partial:hover{color:var(--verde-hover);text-decoration:underline}
-.btn-save-partial:disabled{opacity:.5;cursor:not-allowed}
+
+/* TRUST COPY */
+.form-trust{font-size:12px;color:var(--text3);margin-top:16px;line-height:1.6;display:flex;align-items:flex-start;gap:6px}
+.form-trust span{flex-shrink:0}
 
 /* ERROR */
 .error-msg{font-size:12px;color:var(--red);margin-top:4px;display:none}
@@ -147,7 +169,6 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-
 <!-- Google tag (gtag.js) GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-X7G5QFC5L0"></script>
 <script>
@@ -168,8 +189,9 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 
 <div class="intro-section">
   <h2>¿Su empresa está obteniendo una <strong>tasa competitiva</strong>?</h2>
-  <p>Estamos realizando un estudio para conocer qué <strong>tasas, montos y condiciones</strong> están accediendo actualmente las <strong>PyMEs en Chile</strong>. Buscamos construir una visión real del mercado y apoyar a las empresas a comparar sus condiciones de financiamiento con las tendencias del sector.</p>
-  <p>Complete nuestra <strong>breve encuesta</strong> y contribuya a este análisis. Al finalizar, podrá solicitar una copia del informe con los resultados del estudio.</p>
+  <p>Estamos relevando <strong>a qué tasas, montos y plazos</strong> están accediendo hoy las PyMEs para construir una visión real del mercado.</p>
+  <p>Complete la encuesta —<strong>2 minutos, 5 pasos</strong>— y al finalizar <strong>recibirá un informe con las tasas y condiciones reales del sector en Chile</strong>, segmentadas para que pueda comparar las de su empresa.</p>
+  <p class="intro-autoria" style="font-size:13px;margin-top:12px"><strong>Estudio realizado por Digiconsulting</strong>, consultora independiente especializada en instituciones financieras. No vendemos productos financieros ni compartimos sus datos con bancos: los resultados son agregados y anónimos.</p>
 </div>
 <div class="form-wrap">
 <div class="form-card">
@@ -177,43 +199,21 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <!-- PROGRESS BAR -->
   <div class="progress-wrap">
     <div class="progress" id="progress-bar">
-      <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Contacto</span></div>
+      <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Tamaño</span></div>
       <div class="step-line" id="line-1-2"></div>
-      <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Tamaño</span></div>
+      <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Capital</span></div>
       <div class="step-line" id="line-2-3"></div>
-      <div class="step-circle pending" id="step-3"><span>3</span><span class="step-label">Capital</span></div>
+      <div class="step-circle pending" id="step-3"><span>3</span><span class="step-label">FOGAPE</span></div>
       <div class="step-line" id="line-3-4"></div>
-      <div class="step-circle pending" id="step-4"><span>4</span><span class="step-label">FOGAPE</span></div>
+      <div class="step-circle pending" id="step-4"><span>4</span><span class="step-label">Garantías</span></div>
       <div class="step-line" id="line-4-5"></div>
-      <div class="step-circle pending" id="step-5"><span>5</span><span class="step-label">Requisitos</span></div>
+      <div class="step-circle pending" id="step-5"><span>5</span><span class="step-label">Contacto</span></div>
     </div>
+    <div class="step-label-mobile" id="step-label-mobile"></div>
   </div>
 
-  <!-- BLOQUE 0: CONTACTO -->
+  <!-- BLOQUE 0: TAMAÑO -->
   <div class="bloque active" id="bloque-0">
-    <div class="bloque-title">Información de Contacto</div>
-    <div class="field" id="f-rut">
-      <label>RUT <span class="req">*</span></label>
-      <input type="text" id="rut" placeholder="00-00000000-0" maxlength="12">
-    </div>
-    <div class="grid-2">
-      <div class="field" id="f-email-empresa">
-        <label>Mail Empresa <span class="req">*</span></label>
-        <input type="email" id="email-empresa" placeholder="empresa@ejemplo.cl">
-      </div>
-      <div class="field" id="f-email">
-        <label>Mail Contacto <span class="req">*</span></label>
-        <input type="email" id="email" placeholder="nombre@ejemplo.cl">
-      </div>
-    </div>
-    <div class="field" id="f-telefono">
-      <label>Teléfono <span class="req">*</span></label>
-      <input type="tel" id="telefono" placeholder="+56 9 XXXX XXXX">
-    </div>
-  </div>
-
-  <!-- BLOQUE 1: TAMAÑO -->
-  <div class="bloque" id="bloque-1">
     <div class="bloque-title">Caracterización de la Empresa</div>
     <div class="pregunta" id="pq-q0">
       <div class="pregunta-label">Q0. Tamaño de la Empresa (Facturación Anual Neta)</div>
@@ -226,176 +226,119 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
   </div>
 
-  <!-- BLOQUE 2: CAPITAL DE TRABAJO -->
-  <div class="bloque" id="bloque-2">
-    <span class="bloque-tag">Bloque 1</span>
+  <!-- BLOQUE 4: CONTACTO (último paso) -->
+  <div class="bloque" id="bloque-4">
+    <div class="bloque-title">Información de Contacto</div>
+    <div class="field" id="f-email">
+      <label>Correo electrónico <span class="req">*</span></label>
+      <input type="email" id="email" placeholder="nombre@empresa.cl">
+      <p class="field-hint" style="font-size:12px;color:var(--text3);margin-top:6px">A este correo le enviaremos el informe con los resultados.</p>
+    </div>
+    <div class="field" id="f-rut">
+      <label>RUT <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
+      <input type="text" id="rut" placeholder="00-00000000-0" maxlength="12">
+      <p class="field-hint" style="font-size:12px;color:var(--text3);margin-top:6px">Solo lo usamos para no duplicar respuestas de su empresa. No lo compartimos con bancos ni terceros.</p>
+    </div>
+    <div class="field" id="f-telefono">
+      <label>Teléfono <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
+      <input type="tel" id="telefono" placeholder="+56 9 XXXX XXXX">
+    </div>
+    <p class="form-trust"><span>🔒</span> Sus datos son confidenciales y se usan únicamente para este estudio. No los compartimos con bancos ni terceros. Le tomará 2 minutos.</p>
+  </div>
+
+  <!-- BLOQUE 1: CAPITAL DE TRABAJO -->
+  <div class="bloque" id="bloque-1">
     <div class="bloque-title">Préstamo de Capital de Trabajo Estándar (Sin Garantía)</div>
 
-    <div class="pregunta" id="pq-q1">
-      <div class="pregunta-label">Q1. ¿Cuál es la modalidad de tasa de interés PRINCIPAL con la que se financia su empresa en el mercado tradicional para Préstamo de Capital de Trabajo Estándar (Sin Garantía)?</div>
+    <div class="pregunta" id="pq-q-std-clp">
+      <div class="pregunta-label">Q1. Seleccione el rango de tasa anual obtenido en su última operación principal en <strong>Pesos (CLP)</strong>:</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q1" value="clp"> <span class="opcion-text">Tasa de interés Nominal en Pesos (CLP)</span></label>
-        <label class="opcion"><input type="radio" name="q1" value="uf"> <span class="opcion-text">Tasa de interés reajustable en Unidades de Fomento (UF)</span></label>
-        <label class="opcion"><input type="radio" name="q1" value="no"> <span class="opcion-text">No utiliza este tipo de financiamiento</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">A menos de 8,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">Entre 8,00% y 9,50% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">Entre 9,51% y 11,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">Entre 11,01% y 12,50% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">Entre 12,51% y 14,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">Entre 14,01% y 15,50% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">Más de 15,51% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_clp"> <span class="opcion-text">No aplica / no usa este tipo de financiamiento</span></label>
       </div>
     </div>
 
-    <!-- Q2 condicional según Q1 -->
-    <div class="subpregunta" id="sq-q2-clp">
-      <div class="pregunta-label">Q2. Seleccione el rango de tasa anual obtenido en su última operación principal en <strong>Pesos (CLP)</strong>:</div>
-      <div class="opciones">
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">A menos de 8,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre 8,00% y 9,50% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre 9,51% y 11,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre 11,01% y 12,50% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre 12,51% y 14,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre 14,01% y 15,50% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Más de 15,51% anual</span></label>
-      </div>
-    </div>
-    <div class="subpregunta" id="sq-q2-uf">
+    <div class="pregunta" id="pq-q-std-uf">
       <div class="pregunta-label">Q2. Seleccione el rango de tasa anual obtenido en su última operación principal en <strong>UF (Tasa Real)</strong>:</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">A menos de UF + 5,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre UF + 5,01% y UF + 6,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre UF + 6,01% y UF + 7,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre UF + 7,01% y UF + 8,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Entre UF + 8,01% y UF + 9,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q2"> <span class="opcion-text">Más de UF + 9,01% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">A menos de UF + 5,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">Entre UF + 5,01% y UF + 6,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">Entre UF + 6,01% y UF + 7,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">Entre UF + 7,01% y UF + 8,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">Entre UF + 8,01% y UF + 9,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">Más de UF + 9,01% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_std_uf"> <span class="opcion-text">No aplica / no usa este tipo de financiamiento</span></label>
       </div>
     </div>
 
-    <!-- Q3 -->
-    <div class="pregunta" id="pq-q3" style="display:none">
-      <div class="pregunta-label">Q3. ¿Su empresa se financia TAMBIÉN bajo la otra modalidad de forma secundaria o complementaria?</div>
+    <div class="pregunta" id="pq-q-std-monto">
+      <div class="pregunta-label">Q3. ¿Cuál es el monto máximo que le ofrecen los bancos comerciales en préstamos estándar sin garantía estatal para plazos de hasta 12 meses?</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q3" value="clp-uf"> <span class="opcion-text">Sí, nuestra tasa principal es en Pesos pero también tomamos deudas en UF</span></label>
-        <label class="opcion"><input type="radio" name="q3" value="uf-clp"> <span class="opcion-text">Sí, nuestra tasa principal es en UF pero también tomamos deudas en Pesos</span></label>
-        <label class="opcion"><input type="radio" name="q3" value="no"> <span class="opcion-text">No, nos financiamos exclusivamente bajo la modalidad única de Q1</span></label>
-      </div>
-      <!-- Q3.A -->
-      <div class="subpregunta" id="sq-q3a">
-        <div class="pregunta-label">Q3.A. ¿A qué tasa de interés en UF (Tasa Real) se financia complementariamente?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q3a"> <span class="opcion-text">A menos de UF + 5,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q3a"> <span class="opcion-text">Entre UF + 5,01% y UF + 7,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q3a"> <span class="opcion-text">Entre UF + 7,01% y UF + 9,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q3a"> <span class="opcion-text">Más de UF + 9,01% anual</span></label>
-        </div>
-      </div>
-      <!-- Q3.B -->
-      <div class="subpregunta" id="sq-q3b">
-        <div class="pregunta-label">Q3.B. ¿A qué tasa nominal en Pesos se financia complementariamente?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q3b"> <span class="opcion-text">A menos de 9,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q3b"> <span class="opcion-text">Entre 9,00% y 12,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q3b"> <span class="opcion-text">Entre 12,01% y 15,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q3b"> <span class="opcion-text">Más de 15,01% anual</span></label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4 -->
-    <div class="pregunta" id="pq-q4" style="display:none">
-      <div class="pregunta-label">Q4. ¿Cuál es el monto máximo que le ofrecen los bancos comerciales en préstamos estándar sin garantía estatal para plazos de hasta 12 meses?</div>
-      <div class="opciones">
-        <label class="opcion"><input type="radio" name="q4"> <span class="opcion-text">Hasta UF 2.500 (Aprox. $100M CLP / $110.000 USD)</span></label>
-        <label class="opcion"><input type="radio" name="q4"> <span class="opcion-text">Entre UF 2.501 y UF 5.000 (Aprox. $100M a $200M CLP / $220.000 USD)</span></label>
-        <label class="opcion"><input type="radio" name="q4"> <span class="opcion-text">Entre UF 5.001 y UF 10.000 (Aprox. $200M a $400M CLP / $440.000 USD)</span></label>
-        <label class="opcion"><input type="radio" name="q4"> <span class="opcion-text">Entre UF 10.001 y UF 25.000 (Aprox. $400M a $1.000M CLP / $1,1 Millones USD)</span></label>
-        <label class="opcion"><input type="radio" name="q4"> <span class="opcion-text">Entre UF 25.011 y UF 50.000 (Aprox. $1.000M a $2.000M CLP / $2,2 Millones USD)</span></label>
-        <label class="opcion"><input type="radio" name="q4"> <span class="opcion-text">Más de UF 50.001 (Más de $2.000M CLP / $2,2 Millones USD)</span></label>
+        <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Hasta UF 2.500 (Aprox. $100M CLP / $110.000 USD)</span></label>
+        <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Entre UF 2.501 y UF 5.000 (Aprox. $100M a $200M CLP / $220.000 USD)</span></label>
+        <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Entre UF 5.001 y UF 10.000 (Aprox. $200M a $400M CLP / $440.000 USD)</span></label>
+        <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Entre UF 10.001 y UF 25.000 (Aprox. $400M a $1.000M CLP / $1,1 Millones USD)</span></label>
+        <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Entre UF 25.011 y UF 50.000 (Aprox. $1.000M a $2.000M CLP / $2,2 Millones USD)</span></label>
+        <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Más de UF 50.001 (Más de $2.000M CLP / $2,2 Millones USD)</span></label>
       </div>
     </div>
   </div>
 
-  <!-- BLOQUE 3: FOGAPE -->
-  <div class="bloque" id="bloque-3">
-    <span class="bloque-tag">Bloque 2</span>
+  <!-- BLOQUE 2: FOGAPE -->
+  <div class="bloque" id="bloque-2">
     <div class="bloque-title">Préstamos con Garantía Estatal (FOGAPE)</div>
 
-    <div class="pregunta" id="pq-q5">
-      <div class="pregunta-label">Q5. ¿Cuál es la modalidad de tasa de interés PRINCIPAL bajo el esquema FOGAPE en su empresa para Préstamos con Garantía Estatal?</div>
+    <div class="pregunta" id="pq-q-fogape-clp">
+      <div class="pregunta-label">Q4. Seleccione el rango de tasa anual de su última colocación FOGAPE en <strong>Pesos (CLP)</strong>:</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q5" value="clp"> <span class="opcion-text">Tasa de interés Nominal en Pesos (CLP)</span></label>
-        <label class="opcion"><input type="radio" name="q5" value="uf"> <span class="opcion-text">Tasa de interés reajustable en Unidades de Fomento (UF)</span></label>
-        <label class="opcion"><input type="radio" name="q5" value="no"> <span class="opcion-text">No utiliza / No ha calificado para financiamiento FOGAPE</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">A menos de 8,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">Entre 8,00% y 9,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">Entre 9,01% y 10,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">Entre 10,01% y 11,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">Entre 11,01% y 12,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">Más de 12,01% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_clp"> <span class="opcion-text">No aplica / no usa este tipo de financiamiento</span></label>
       </div>
     </div>
 
-    <!-- Q6 condicional -->
-    <div class="subpregunta" id="sq-q6-clp">
-      <div class="pregunta-label">Q6. Seleccione el rango de tasa anual de su última colocación FOGAPE en <strong>Pesos (CLP)</strong>:</div>
+    <div class="pregunta" id="pq-q-fogape-uf">
+      <div class="pregunta-label">Q5. Seleccione el rango de tasa anual de su última colocación FOGAPE en <strong>UF (Tasa Real)</strong>:</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">A menos de 8,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre 8,00% y 9,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre 9,01% y 10,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre 10,01% y 11,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre 11,01% y 12,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Más de 12,01% anual</span></label>
-      </div>
-    </div>
-    <div class="subpregunta" id="sq-q6-uf">
-      <div class="pregunta-label">Q6. Seleccione el rango de tasa anual de su última colocación FOGAPE en <strong>UF (Tasa Real)</strong>:</div>
-      <div class="opciones">
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">A menos de UF + 4,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre UF + 4,00% y UF + 4,50% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre UF + 4,51% y UF + 5,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre UF + 5,01% y UF + 5,50% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Entre UF + 5,51% y UF + 6,00% anual</span></label>
-        <label class="opcion"><input type="radio" name="q6"> <span class="opcion-text">Más de UF + 6,01% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">A menos de UF + 4,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">Entre UF + 4,00% y UF + 4,50% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">Entre UF + 4,51% y UF + 5,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">Entre UF + 5,01% y UF + 5,50% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">Entre UF + 5,51% y UF + 6,00% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">Más de UF + 6,01% anual</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_uf"> <span class="opcion-text">No aplica / no usa este tipo de financiamiento</span></label>
       </div>
     </div>
 
-    <!-- Q7 -->
-    <div class="pregunta" id="pq-q7" style="display:none">
-      <div class="pregunta-label">Q7. ¿Su empresa utiliza o mantiene de forma simultánea deudas FOGAPE en la otra moneda/modalidad?</div>
+    <div class="pregunta" id="pq-q-fogape-monto">
+      <div class="pregunta-label">Q6. ¿Cuál es el monto máximo que le ofrecen los bancos comerciales en préstamos con garantía FOGAPE para plazos de hasta 12 meses?</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q7" value="clp-uf"> <span class="opcion-text">Sí, nuestra tasa principal es en Pesos pero también tenemos líneas en UF</span></label>
-        <label class="opcion"><input type="radio" name="q7" value="uf-clp"> <span class="opcion-text">Sí, nuestra tasa principal es en UF pero también tenemos líneas en Pesos</span></label>
-        <label class="opcion"><input type="radio" name="q7" value="no"> <span class="opcion-text">No, solo operamos FOGAPE bajo la modalidad principal declarada en Q5</span></label>
-      </div>
-      <!-- Q7.A -->
-      <div class="subpregunta" id="sq-q7a">
-        <div class="pregunta-label">Q7.A. ¿A qué tasa real en UF se financia?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q7a"> <span class="opcion-text">A menos de UF + 4,50% anual</span></label>
-          <label class="opcion"><input type="radio" name="q7a"> <span class="opcion-text">Entre UF + 4,50% y UF + 5,50% anual</span></label>
-          <label class="opcion"><input type="radio" name="q7a"> <span class="opcion-text">Más de UF + 5,51% anual</span></label>
-        </div>
-      </div>
-      <!-- Q7.B -->
-      <div class="subpregunta" id="sq-q7b">
-        <div class="pregunta-label">Q7.B. ¿A qué tasa nominal en Pesos se financia?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q7b"> <span class="opcion-text">A menos de 9,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q7b"> <span class="opcion-text">Entre 9,00% y 11,00% anual</span></label>
-          <label class="opcion"><input type="radio" name="q7b"> <span class="opcion-text">Más de 11,01% anual</span></label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q8 -->
-    <div class="pregunta" id="pq-q8" style="display:none">
-      <div class="pregunta-label">Q8. ¿Cuál es el monto máximo que le ofrecen los bancos comerciales en préstamos con garantía FOGAPE para plazos de hasta 12 meses?</div>
-      <div class="opciones">
-        <label class="opcion"><input type="radio" name="q8"> <span class="opcion-text">Hasta UF 2.500</span></label>
-        <label class="opcion"><input type="radio" name="q8"> <span class="opcion-text">Entre UF 2.501 y UF 5.000</span></label>
-        <label class="opcion"><input type="radio" name="q8"> <span class="opcion-text">Entre UF 5.001 y UF 10.000</span></label>
-        <label class="opcion"><input type="radio" name="q8"> <span class="opcion-text">Entre UF 10.001 y UF 15.000</span></label>
-        <label class="opcion"><input type="radio" name="q8"> <span class="opcion-text">Entre UF 15.001 y UF 25.000</span></label>
-        <label class="opcion"><input type="radio" name="q8"> <span class="opcion-text">No nos ofrecen cupo FOGAPE a pesar de cumplir con los requisitos de tamaño</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Hasta UF 2.500</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Entre UF 2.501 y UF 5.000</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Entre UF 5.001 y UF 10.000</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Entre UF 10.001 y UF 15.000</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Entre UF 15.001 y UF 25.000</span></label>
+        <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">No nos ofrecen cupo FOGAPE a pesar de cumplir con los requisitos de tamaño</span></label>
       </div>
     </div>
   </div>
 
-  <!-- BLOQUE 4: REQUISITOS -->
-  <div class="bloque" id="bloque-4">
-    <span class="bloque-tag">Bloque 3</span>
-    <div class="bloque-title">Requisitos y Colaterales</div>
+  <!-- BLOQUE 3: REQUISITOS (Garantías) -->
+  <div class="bloque" id="bloque-3">
+    <div class="bloque-title">Garantías y Colaterales Exigidos</div>
 
     <div class="pregunta" id="pq-q9">
-      <div class="pregunta-label">Q9. ¿Cuál es la principal exigencia de los bancos para otorgar un crédito SIN garantía estatal?</div>
+      <div class="pregunta-label">Q7. ¿Cuál es la principal exigencia de los bancos para otorgar un crédito SIN garantía estatal?</div>
       <div class="opciones">
         <label class="opcion"><input type="radio" name="q9"> <span class="opcion-text">Aval personal / fianza de los socios controladores de la empresa.</span></label>
         <label class="opcion"><input type="radio" name="q9"> <span class="opcion-text">Garantías reales duras (Hipotecas de naves industriales, oficinas o terrenos).</span></label>
@@ -405,7 +348,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
 
     <div class="pregunta" id="pq-q10">
-      <div class="pregunta-label">Q10. ¿Cuál es la principal exigencia de los bancos para otorgar un crédito CON garantía estatal (FOGAPE)?</div>
+      <div class="pregunta-label">Q8. ¿Cuál es la principal exigencia de los bancos para otorgar un crédito CON garantía estatal (FOGAPE)?</div>
       <div class="opciones">
         <label class="opcion"><input type="radio" name="q10"> <span class="opcion-text">Únicamente la fianza o aval personal de los socios controladores.</span></label>
         <label class="opcion"><input type="radio" name="q10"> <span class="opcion-text">Garantías reales complementarias por el porcentaje de riesgo residual (el 20% o 30% no cubierto por el Estado).</span></label>
@@ -418,7 +361,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <div class="success-screen" id="success">
     <div class="success-icon">✅</div>
     <h2>¡Gracias por participar!</h2>
-    <p>Hemos recibido sus respuestas. Nos pondremos en contacto a la brevedad para coordinar los próximos pasos de la simulación.</p>
+    <p>Hemos recibido sus respuestas. Le enviaremos el informe con los resultados del estudio a su correo apenas cerremos esta ronda de recolección.</p>
   </div>
 
   <!-- NAVEGACIÓN -->
@@ -426,7 +369,6 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     <button class="btn-back" id="btn-back" onclick="goBack()" style="visibility:hidden">← Anterior</button>
     <button class="btn-next" id="btn-next" onclick="goNext()">Continuar →</button>
   </div>
-  <button class="btn-save-partial" id="btn-save-partial" onclick="savePartial()">Guardar y continuar más tarde</button>
 
 </div>
 </div>
@@ -437,9 +379,12 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 
 <script>
 const LOCAL_STORAGE_KEY = 'encuestaMPChile_borrador';
+const DRAFT_ID_KEY = 'encuestaMPChile_draftId';
+const COMPLETED_KEY = 'encuestaMPChile_completada';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec';
 let currentBloque = 0;
 const totalBloques = 5; // 0-4
-let skipFogape = false;
+let draftId = getOrCreateDraftId();
 
 // Estilo visual opciones al seleccionar
 document.querySelectorAll('.opcion input[type=radio]').forEach(radio => {
@@ -449,101 +394,55 @@ document.querySelectorAll('.opcion input[type=radio]').forEach(radio => {
       r.closest('.opcion').classList.remove('selected');
     });
     this.closest('.opcion').classList.add('selected');
-    handleConditional(name, this.value);
+    const pregunta = this.closest('.pregunta');
+    if(pregunta && pregunta.classList.contains('error')){
+      pregunta.classList.remove('error');
+      const m = pregunta.querySelector('.error-msg');
+      if(m) m.style.display = 'none';
+    }
   });
 });
-
-function handleConditional(name, value){
-  if(name === 'q1'){
-    // Mostrar Q2 según modalidad
-    hide('sq-q2-clp'); hide('sq-q2-uf');
-    hide('pq-q3'); hide('pq-q4');
-    hide('sq-q3a'); hide('sq-q3b');
-    clearRadios('q2'); clearRadios('q3'); clearRadios('q3a'); clearRadios('q3b');
-    if(value === 'clp'){ show('sq-q2-clp'); show('pq-q3'); show('pq-q4'); }
-    if(value === 'uf'){ show('sq-q2-uf'); show('pq-q3'); show('pq-q4'); }
-    if(value === 'no'){ skipFogape = false; } // no salta, continúa a bloque FOGAPE
-  }
-  if(name === 'q3'){
-    hide('sq-q3a'); hide('sq-q3b');
-    if(value === 'clp-uf') show('sq-q3a');
-    if(value === 'uf-clp') show('sq-q3b');
-  }
-  if(name === 'q5'){
-    hide('sq-q6-clp'); hide('sq-q6-uf');
-    hide('pq-q7'); hide('pq-q8');
-    hide('sq-q7a'); hide('sq-q7b');
-    clearRadios('q6'); clearRadios('q7'); clearRadios('q7a'); clearRadios('q7b');
-    if(value === 'clp'){ show('sq-q6-clp'); show('pq-q7'); show('pq-q8'); }
-    if(value === 'uf'){ show('sq-q6-uf'); show('pq-q7'); show('pq-q8'); }
-    if(value === 'no'){ skipFogape = true; }
-  }
-  if(name === 'q7'){
-    hide('sq-q7a'); hide('sq-q7b');
-    if(value === 'clp-uf') show('sq-q7a');
-    if(value === 'uf-clp') show('sq-q7b');
-  }
+// Limpiar error del email al escribir
+const emailInput = document.getElementById('email');
+if(emailInput){
+  emailInput.addEventListener('input', function(){
+    const field = this.closest('.field');
+    if(field && field.classList.contains('error')){
+      field.classList.remove('error');
+      const m = field.querySelector('.error-msg');
+      if(m) m.style.display = 'none';
+    }
+  });
 }
 
-function show(id){ const el=document.getElementById(id); if(el){ el.style.display='block'; el.classList.add('visible'); }}
-function hide(id){ const el=document.getElementById(id); if(el){ el.style.display='none'; el.classList.remove('visible'); }}
-function clearRadios(name){ document.querySelectorAll(`input[name="${name}"]`).forEach(r=>{ r.checked=false; r.closest('.opcion').classList.remove('selected'); }); }
-
+function clearErrors(){
+  document.querySelectorAll('.field.error,.pregunta.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.error-msg').forEach(el => { el.style.display = 'none'; });
+}
+function showError(containerId, msg){
+  const el = document.getElementById(containerId);
+  if(!el) return false;
+  el.classList.add('error');
+  let m = el.querySelector('.error-msg');
+  if(!m){ m = document.createElement('div'); m.className = 'error-msg'; el.appendChild(m); }
+  m.textContent = msg;
+  m.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+  return false;
+}
 function validateBloque(b){
-  if(b === 0){
-    const emailEmpresa = document.getElementById('email-empresa').value.trim();
-    const rut = document.getElementById('rut').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const telefono = document.getElementById('telefono').value.trim();
-    if(!emailEmpresa || !rut || !email || !telefono){
-      alert('Por favor complete todos los campos obligatorios.');
-      return false;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEmpresa)){
-      alert('Por favor ingrese un email de empresa válido.');
-      return false;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      alert('Por favor ingrese un email de contacto válido.');
-      return false;
-    }
-    return true;
-  }
+  clearErrors();
+  // Obligatorios: Bloque 1 de Capital de Trabajo (paso 1) y email (Contacto, paso final). FOGAPE y Garantías son opcionales.
   if(b === 1){
-    if(!document.querySelector('input[name="q0"]:checked')){
-      alert('Por favor seleccione el tamaño de su empresa.'); return false;
-    }
-    return true;
-  }
-  if(b === 2){
-    const q1 = document.querySelector('input[name="q1"]:checked');
-    if(!q1){ alert('Por favor responda Q1.'); return false; }
-    if(q1.value !== 'no'){
-      if(!document.querySelector('input[name="q2"]:checked')){ alert('Por favor responda Q2.'); return false; }
-      if(!document.querySelector('input[name="q3"]:checked')){ alert('Por favor responda Q3.'); return false; }
-      const q3 = document.querySelector('input[name="q3"]:checked').value;
-      if(q3 === 'clp-uf' && !document.querySelector('input[name="q3a"]:checked')){ alert('Por favor responda Q3.A.'); return false; }
-      if(q3 === 'uf-clp' && !document.querySelector('input[name="q3b"]:checked')){ alert('Por favor responda Q3.B.'); return false; }
-      if(!document.querySelector('input[name="q4"]:checked')){ alert('Por favor responda Q4.'); return false; }
-    }
-    return true;
-  }
-  if(b === 3){
-    const q5 = document.querySelector('input[name="q5"]:checked');
-    if(!q5){ alert('Por favor responda Q5.'); return false; }
-    if(q5.value !== 'no'){
-      if(!document.querySelector('input[name="q6"]:checked')){ alert('Por favor responda Q6.'); return false; }
-      if(!document.querySelector('input[name="q7"]:checked')){ alert('Por favor responda Q7.'); return false; }
-      const q7 = document.querySelector('input[name="q7"]:checked').value;
-      if(q7 === 'clp-uf' && !document.querySelector('input[name="q7a"]:checked')){ alert('Por favor responda Q7.A.'); return false; }
-      if(q7 === 'uf-clp' && !document.querySelector('input[name="q7b"]:checked')){ alert('Por favor responda Q7.B.'); return false; }
-      if(!document.querySelector('input[name="q8"]:checked')){ alert('Por favor responda Q8.'); return false; }
-    }
+    if(!document.querySelector('input[name="q_std_clp"]:checked')) return showError('pq-q-std-clp','Seleccione una opción para continuar.');
+    if(!document.querySelector('input[name="q_std_uf"]:checked')) return showError('pq-q-std-uf','Seleccione una opción para continuar.');
+    if(!document.querySelector('input[name="q_std_monto"]:checked')) return showError('pq-q-std-monto','Seleccione una opción para continuar.');
     return true;
   }
   if(b === 4){
-    if(!document.querySelector('input[name="q9"]:checked')){ alert('Por favor responda Q9.'); return false; }
-    if(!document.querySelector('input[name="q10"]:checked')){ alert('Por favor responda Q10.'); return false; }
+    const email = document.getElementById('email').value.trim();
+    if(!email) return showError('f-email','Ingrese su correo electrónico.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('f-email','Ingrese un correo válido (ej.: nombre@empresa.cl).');
     return true;
   }
   return true;
@@ -551,40 +450,37 @@ function validateBloque(b){
 
 function goNext(){
   if(!validateBloque(currentBloque)) return;
-
-  // Nombres de etapas para GA4
-  const etapas = ['Contacto', 'Tamaño', 'Capital', 'FOGAPE', 'Requisitos'];
-
-  // Evento Meta Pixel solo en el primer botón Continuar (paso Contacto)
-  if(currentBloque === 0 && typeof fbq !== 'undefined') {
-    fbq('trackCustom', 'InicioEncuesta', {
-      content_name: 'Encuesta MP Chile'
-    });
-  }
-  // Evento Meta Pixel en el botón Continuar del paso Tamaño
-  if(currentBloque === 1 && typeof fbq !== 'undefined') {
-    fbq('trackCustom', 'IniciarPago', {
-      content_name: 'Encuesta MP Chile - Tamaño completado',
-      tamanio: getRadio('q0')
-    });
-  }
-
-  // Evento GA4 por cada etapa completada
-  if(typeof gtag !== 'undefined') {
+  // GA4: etapa completada (nombres/params idénticos a la otra branch para comparar).
+  // Array reordenado al flujo real de ESTA branch (Contacto al final tras el refactor).
+  const etapas = ['Tamaño', 'Capital', 'FOGAPE', 'Requisitos', 'Contacto'];
+  if (typeof gtag !== 'undefined') {
     gtag('event', 'etapa_completada', {
       etapa_numero: currentBloque + 1,
       etapa_nombre: etapas[currentBloque] || 'Desconocida',
       form_name: 'Encuesta MP Chile'
     });
   }
-
+  // Evento Meta Pixel en el primer botón Continuar (paso Tamaño)
+  if(currentBloque === 0 && typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'InicioEncuesta', {
+      content_name: 'Encuesta MP Chile',
+      tamanio: getRadio('q0')
+    });
+  }
+  // Evento Meta Pixel en el botón del paso Contacto (ahora es el último paso, al enviar)
+  if(currentBloque === 4 && typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'IniciarPago', {
+      content_name: 'Encuesta MP Chile - Contacto completado'
+    });
+  }
   if(currentBloque < totalBloques - 1){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
     currentBloque++;
     document.getElementById('bloque-'+currentBloque).classList.add('active');
     updateProgress();
     saveLocalDraft();
-    window.scrollTo({top:0, behavior:'smooth'});
+    autosaveStep();
+    scrollToForm();
   } else {
     // Submit final
     submitForm();
@@ -597,8 +493,14 @@ function goBack(){
     currentBloque--;
     document.getElementById('bloque-'+currentBloque).classList.add('active');
     updateProgress();
-    window.scrollTo({top:0, behavior:'smooth'});
+    scrollToForm();
   }
+}
+// Lleva el foco al inicio de la tarjeta del formulario (progress + pregunta), no al tope de la página
+function scrollToForm(){
+  const card = document.querySelector('.form-card');
+  if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+  else window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function updateProgress(){
@@ -618,17 +520,20 @@ function updateProgress(){
   const backBtn = document.getElementById('btn-back');
   backBtn.style.visibility = currentBloque > 0 ? 'visible' : 'hidden';
   const nextBtn = document.getElementById('btn-next');
-  nextBtn.textContent = currentBloque === totalBloques - 1 ? 'Enviar encuesta' : 'Continuar →';
+  const textosBoton = ['Comenzar encuesta →','Continuar →','Continuar →','Continuar →','Enviar y recibir mi informe →'];
+  nextBtn.textContent = textosBoton[currentBloque];
   // Clarity: etiquetar el paso actual para segmentar sesiones por avance
-  const nombresPasos = ['Contacto','Tamaño','Capital','FOGAPE','Requisitos'];
+  const nombresPasos = ['Tamaño','Capital','FOGAPE','Garantías','Contacto'];
   if(window.clarity) clarity('set','paso_encuesta', nombresPasos[currentBloque]);
+  // Indicador de paso para mobile (los step-label individuales se ocultan en <600px)
+  const stepLabelMobile = document.getElementById('step-label-mobile');
+  if(stepLabelMobile) stepLabelMobile.textContent = `Paso ${currentBloque+1} de ${totalBloques} — ${nombresPasos[currentBloque]}`;
 }
 
 function submitForm(){
   document.getElementById('bloque-4').classList.remove('active');
   document.getElementById('success').classList.add('show');
   document.getElementById('nav-btns').style.display = 'none';
-  document.getElementById('btn-save-partial').style.display = 'none';
   // Actualizar progress a completo
   ['step-1','step-2','step-3','step-4','step-5'].forEach(s=>{
     const el=document.getElementById(s);
@@ -642,35 +547,14 @@ function submitForm(){
   // Clarity: marcar sesión como encuesta completada
   if(window.clarity){ clarity('set','paso_encuesta','Completada'); clarity('set','encuesta_completada','si'); }
   // Recopilar todas las respuestas
-  const payload = {
-    estado: 'completo',
-    mailEmpresa: document.getElementById('email-empresa').value.trim(),
-    rut: document.getElementById('rut').value.trim(),
-    mailContacto: document.getElementById('email').value.trim(),
-    telefono: document.getElementById('telefono').value.trim(),
-    q0: getRadio('q0'),
-    q1: getRadio('q1'),
-    q2: getRadio('q2'),
-    q3: getRadio('q3'),
-    q3a: getRadio('q3a'),
-    q3b: getRadio('q3b'),
-    q4: getRadio('q4'),
-    q5: getRadio('q5'),
-    q6: getRadio('q6'),
-    q7: getRadio('q7'),
-    q7a: getRadio('q7a'),
-    q7b: getRadio('q7b'),
-    q8: getRadio('q8'),
-    q9: getRadio('q9'),
-    q10: getRadio('q10')
-  };
+  const payload = Object.assign({ estado: 'completo', draftId: draftId }, collectAnswers());
 
   // Enviar a Google Sheets via Apps Script
   const btn = document.getElementById('btn-next');
   btn.disabled = true;
   btn.textContent = 'Enviando...';
 
-  fetch('https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec', {
+  fetch(ENDPOINT, {
     method: 'POST',
     mode: 'no-cors',
     headers: {'Content-Type': 'application/json'},
@@ -693,6 +577,9 @@ function getRadio(name) {
 
 function showSuccess() {
   clearLocalDraft();
+  // Marca la encuesta como completada para bloquear reenvíos en próximas visitas
+  // (clave separada que clearLocalDraft NO borra).
+  try { localStorage.setItem(COMPLETED_KEY, '1'); } catch(e) { /* ignorar */ }
   // Meta Pixel - Evento de conversión Purchase al completar el formulario
   if(typeof fbq !== 'undefined') {
     fbq('track', 'Purchase', {
@@ -701,17 +588,22 @@ function showSuccess() {
       content_name: 'Encuesta MP Chile Completada'
     });
   }
-  // GA4 - Evento de conversión al completar el formulario
-  if(typeof gtag !== 'undefined') {
+  // GA4: conversión al completar la encuesta (solo en el envío real, no en el lock de reingreso)
+  if (typeof gtag !== 'undefined') {
     gtag('event', 'form_completado', {
       form_name: 'Encuesta MP Chile',
       value: 1
     });
   }
-  document.getElementById('bloque-4').classList.remove('active');
+  renderCompleted();
+}
+
+// Muestra la pantalla de "gracias / respuesta registrada" y deja el progreso en
+// completo. La usan tanto el envío final como el lock al reingresar.
+function renderCompleted() {
+  document.querySelector('.bloque.active')?.classList.remove('active');
   document.getElementById('success').classList.add('show');
   document.getElementById('nav-btns').style.display = 'none';
-  document.getElementById('btn-save-partial').style.display = 'none';
   ['step-1','step-2','step-3','step-4','step-5'].forEach(s=>{
     const el=document.getElementById(s);
     el.classList.remove('active','pending');
@@ -723,27 +615,24 @@ function showSuccess() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function isEncuestaCompletada(){
+  try { return localStorage.getItem(COMPLETED_KEY) === '1'; } catch(e) { return false; }
+}
+
 function getFormSnapshot(){
   return {
     currentBloque: currentBloque,
-    mailEmpresa: document.getElementById('email-empresa').value.trim(),
+    correo: document.getElementById('email').value.trim(),
     rut: document.getElementById('rut').value.trim(),
-    mailContacto: document.getElementById('email').value.trim(),
     telefono: document.getElementById('telefono').value.trim(),
     radios: {
       q0: getRadioValue('q0'),
-      q1: getRadioValue('q1'),
-      q2: getRadioValue('q2'),
-      q3: getRadioValue('q3'),
-      q3a: getRadioValue('q3a'),
-      q3b: getRadioValue('q3b'),
-      q4: getRadioValue('q4'),
-      q5: getRadioValue('q5'),
-      q6: getRadioValue('q6'),
-      q7: getRadioValue('q7'),
-      q7a: getRadioValue('q7a'),
-      q7b: getRadioValue('q7b'),
-      q8: getRadioValue('q8'),
+      q_std_clp: getRadioValue('q_std_clp'),
+      q_std_uf: getRadioValue('q_std_uf'),
+      q_std_monto: getRadioValue('q_std_monto'),
+      q_fogape_clp: getRadioValue('q_fogape_clp'),
+      q_fogape_uf: getRadioValue('q_fogape_uf'),
+      q_fogape_monto: getRadioValue('q_fogape_monto'),
       q9: getRadioValue('q9'),
       q10: getRadioValue('q10')
     }
@@ -757,7 +646,6 @@ function getRadioValue(name){
 
 function resetFormExceptRut(newRut){
   // Limpia todos los campos de contacto (excepto el RUT que se está escribiendo) y todas las selecciones
-  document.getElementById('email-empresa').value = '';
   document.getElementById('email').value = '';
   document.getElementById('telefono').value = '';
 
@@ -766,10 +654,6 @@ function resetFormExceptRut(newRut){
     const opt = input.closest('.opcion');
     if(opt) opt.classList.remove('selected');
   });
-
-  // Oculta subpreguntas condicionales que pudieran haber quedado visibles
-  ['sq-q2-clp','sq-q2-uf','pq-q3','pq-q4','sq-q3a','sq-q3b',
-   'sq-q6-clp','sq-q6-uf','pq-q7','pq-q8','sq-q7a','sq-q7b'].forEach(hide);
 
   if(currentBloque !== 0){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
@@ -808,7 +692,64 @@ function saveLocalDraft(){
 function clearLocalDraft(){
   try {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.removeItem(DRAFT_ID_KEY);
   } catch(e) { /* ignorar */ }
+  // Regenera un id nuevo para el próximo borrador (nuevo respondente / nueva sesión)
+  draftId = getOrCreateDraftId();
+}
+
+function generateId(){
+  try {
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  } catch(e) { /* fallback abajo */ }
+  return 'd_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,10);
+}
+
+function getOrCreateDraftId(){
+  try {
+    let id = localStorage.getItem(DRAFT_ID_KEY);
+    if(!id){ id = generateId(); localStorage.setItem(DRAFT_ID_KEY, id); }
+    return id;
+  } catch(e) {
+    return generateId();
+  }
+}
+
+// Campos compartidos por el guardado parcial, el autosave y el envío final
+function collectAnswers(){
+  const correo = document.getElementById('email').value.trim();
+  return {
+    mailEmpresa: correo,
+    rut: document.getElementById('rut').value.trim(),
+    mailContacto: correo,
+    telefono: document.getElementById('telefono').value.trim(),
+    q0: getRadio('q0'),
+    q_std_clp: getRadio('q_std_clp'),
+    q_std_uf: getRadio('q_std_uf'),
+    q_std_monto: getRadio('q_std_monto'),
+    q_fogape_clp: getRadio('q_fogape_clp'),
+    q_fogape_uf: getRadio('q_fogape_uf'),
+    q_fogape_monto: getRadio('q_fogape_monto'),
+    q9: getRadio('q9'),
+    q10: getRadio('q10')
+  };
+}
+
+// Autosave silencioso al avanzar de paso: persiste server-side todo lo respondido
+// hasta el momento (fire-and-forget, sin feedback visual). Dedup por draftId en la planilla.
+function autosaveStep(){
+  const answers = collectAnswers();
+  const hayAlgo = Object.keys(answers).some(k => answers[k]);
+  if(!hayAlgo) return; // no mandamos filas totalmente vacías
+  const payload = Object.assign({ estado: 'parcial', draftId: draftId }, answers);
+  try {
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { /* fire-and-forget */ }
 }
 
 function restoreLocalDraft(){
@@ -824,9 +765,8 @@ function restoreLocalDraft(){
   } catch(e) { return; }
   if(!snap) return;
 
-  document.getElementById('email-empresa').value = snap.mailEmpresa || '';
+  document.getElementById('email').value = snap.correo || snap.mailContacto || snap.mailEmpresa || '';
   document.getElementById('rut').value = snap.rut || '';
-  document.getElementById('email').value = snap.mailContacto || '';
   document.getElementById('telefono').value = snap.telefono || '';
 
   if(snap.radios){
@@ -837,7 +777,6 @@ function restoreLocalDraft(){
       if(input){
         input.checked = true;
         input.closest('.opcion').classList.add('selected');
-        handleConditional(name, value);
       }
     });
   }
@@ -850,67 +789,14 @@ function restoreLocalDraft(){
   }
 }
 
-function savePartial(){
-  const rut = document.getElementById('rut').value.trim();
-  if(!rut){
-    alert('Para guardar sus respuestas parciales, complete el RUT en el primer paso.');
-    return;
-  }
-
-  const payload = {
-    estado: 'parcial',
-    mailEmpresa: document.getElementById('email-empresa').value.trim(),
-    rut: rut,
-    mailContacto: document.getElementById('email').value.trim(),
-    telefono: document.getElementById('telefono').value.trim(),
-    q0: getRadio('q0'),
-    q1: getRadio('q1'),
-    q2: getRadio('q2'),
-    q3: getRadio('q3'),
-    q3a: getRadio('q3a'),
-    q3b: getRadio('q3b'),
-    q4: getRadio('q4'),
-    q5: getRadio('q5'),
-    q6: getRadio('q6'),
-    q7: getRadio('q7'),
-    q7a: getRadio('q7a'),
-    q7b: getRadio('q7b'),
-    q8: getRadio('q8'),
-    q9: getRadio('q9'),
-    q10: getRadio('q10')
-  };
-
-  const saveBtn = document.getElementById('btn-save-partial');
-  const originalText = saveBtn.textContent;
-  saveBtn.disabled = true;
-  saveBtn.textContent = 'Guardando...';
-
-  saveLocalDraft();
-
-  fetch('https://script.google.com/macros/s/AKfycbxilVTImRO1syNia-K_xuI_I7W1UXIwCO8J995J1Hy4OPBK8xpinzGIH96lxcjaFT9A/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
-  })
-  .then(() => {
-    saveBtn.textContent = '✓ Respuestas guardadas';
-    setTimeout(() => {
-      saveBtn.disabled = false;
-      saveBtn.textContent = originalText;
-    }, 2500);
-  })
-  .catch(() => {
-    saveBtn.textContent = '✓ Respuestas guardadas';
-    setTimeout(() => {
-      saveBtn.disabled = false;
-      saveBtn.textContent = originalText;
-    }, 2500);
-  });
-}
-
 updateProgress();
-restoreLocalDraft();
+if(isEncuestaCompletada()){
+  // Ya respondió en una visita anterior: mostramos la pantalla de gracias en
+  // lugar del formulario (no restauramos borrador ni permitimos reenviar).
+  renderCompleted();
+} else {
+  restoreLocalDraft();
+}
 
 const rutInput = document.getElementById('rut');
 if(rutInput){
