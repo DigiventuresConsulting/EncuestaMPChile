@@ -216,7 +216,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <div class="bloque active" id="bloque-0">
     <div class="bloque-title">Caracterización de la Empresa</div>
     <div class="pregunta" id="pq-q0">
-      <div class="pregunta-label">Q0. Tamaño de la Empresa (Facturación Anual Neta)</div>
+      <div class="pregunta-label">Q0. Tamaño de la Empresa (Facturación Anual Neta) <span class="req">*</span></div>
       <div class="opciones">
         <label class="opcion"><input type="radio" name="q0" value="micro"> <span class="opcion-text"><strong>Microempresa:</strong> Hasta 2.400 UF (Hasta $105.000 USD)</span></label>
         <label class="opcion"><input type="radio" name="q0" value="pequena"> <span class="opcion-text"><strong>Pequeña Empresa:</strong> Entre 2.401 y 25.000 UF (De $105.000 a $1,1 Millones USD)</span></label>
@@ -536,8 +536,9 @@ function showError(containerId, msg){
 }
 function validateBloque(b){
   clearErrors();
-  // Obligatorios: banco principal (paso 1), Capital de Trabajo (paso 2) y email (Contacto). FOGAPE y Proceso son opcionales.
+  // Obligatorios: tamaño (Q0) + banco principal (paso 1), Capital de Trabajo (paso 2) y email (Contacto). FOGAPE y Proceso son opcionales.
   if(b === 0){
+    if(!document.querySelector('input[name="q0"]:checked')) return showError('pq-q0','Seleccione el tamaño de su empresa para continuar.');
     if(!document.querySelector('input[name="q_banco"]:checked')) return showError('pq-q-banco','Seleccione su banco principal para continuar.');
     return true;
   }
