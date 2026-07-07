@@ -773,6 +773,7 @@ function getOrCreateDraftId(){
 function collectAnswers(){
   const correo = document.getElementById('email').value.trim();
   return {
+    origen: new URLSearchParams(location.search).has('test') ? 'test' : 'real',
     mailEmpresa: correo,
     rut: document.getElementById('rut').value.trim(),
     mailContacto: correo,
