@@ -270,7 +270,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
 
   <!-- BLOQUE 1: CAPITAL DE TRABAJO -->
   <div class="bloque" id="bloque-1">
-    <div class="bloque-title">Préstamo de Capital de Trabajo Estándar (Sin Garantía)</div>
+    <div class="bloque-title">Préstamo de Capital de Trabajo (Sin Garantía Estatal)</div>
 
     <div class="pregunta" id="pq-q-std-clp">
       <div class="pregunta-label">Q1. Seleccione el rango de tasa anual obtenido en su última operación principal en <strong>Pesos (CLP)</strong>:</div>
@@ -537,16 +537,10 @@ function showError(containerId, msg){
 }
 function validateBloque(b){
   clearErrors();
-  // Obligatorios: tamaño (Q0) + banco principal (paso 1), Capital de Trabajo (paso 2) y email (Contacto). FOGAPE y Proceso son opcionales.
+  // Obligatorios: tamaño (Q0) + banco principal (paso 1) y email (Contacto). Capital de Trabajo (Q1-Q3), FOGAPE y Proceso son opcionales.
   if(b === 0){
     if(!document.querySelector('input[name="q0"]:checked')) return showError('pq-q0','Seleccione el tamaño de su empresa para continuar.');
     if(!document.querySelector('input[name="q_banco"]:checked')) return showError('pq-q-banco','Seleccione su banco principal para continuar.');
-    return true;
-  }
-  if(b === 1){
-    if(!document.querySelector('input[name="q_std_clp"]:checked')) return showError('pq-q-std-clp','Seleccione una opción para continuar.');
-    if(!document.querySelector('input[name="q_std_uf"]:checked')) return showError('pq-q-std-uf','Seleccione una opción para continuar.');
-    if(!document.querySelector('input[name="q_std_monto"]:checked')) return showError('pq-q-std-monto','Seleccione una opción para continuar.');
     return true;
   }
   if(b === 4){
