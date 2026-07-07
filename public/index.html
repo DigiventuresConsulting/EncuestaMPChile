@@ -565,7 +565,8 @@ function goNext(){
     gtag('event', 'etapa_completada', {
       etapa_numero: currentBloque + 1,
       etapa_nombre: etapas[currentBloque] || 'Desconocida',
-      form_name: 'Encuesta MP Chile'
+      form_name: 'Encuesta MP Chile',
+      solicito_financiamiento: getRadioValue('q_solicito')
     });
   }
   // Evento Meta Pixel en el primer botón Continuar (paso Tamaño)
@@ -700,7 +701,8 @@ function showSuccess() {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'form_completado', {
       form_name: 'Encuesta MP Chile',
-      value: 1
+      value: 1,
+      solicito_financiamiento: getRadioValue('q_solicito')
     });
   }
   renderCompleted();
