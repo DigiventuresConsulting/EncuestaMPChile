@@ -362,12 +362,12 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     <div class="pregunta" id="pq-solicito">
       <div class="pregunta-label">Q7. ¿Su empresa ha pasado por un proceso de solicitud de financiamiento bancario en los últimos 24 meses?</div>
       <div class="opciones">
-        <label class="opcion"><input type="radio" name="q_solicito" value="si"> <span class="opcion-text">Sí, hemos solicitado</span></label>
+        <label class="opcion selected"><input type="radio" name="q_solicito" value="si" checked> <span class="opcion-text">Sí, hemos solicitado</span></label>
         <label class="opcion"><input type="radio" name="q_solicito" value="no"> <span class="opcion-text">No, no hemos solicitado</span></label>
       </div>
     </div>
 
-    <div id="sub-proceso" style="display:none">
+    <div id="sub-proceso" style="display:block">
       <div class="pregunta" id="pq-canal">
         <div class="pregunta-label">Q8. ¿A través de qué canal inició su última solicitud de financiamiento?</div>
         <div class="opciones">
@@ -905,9 +905,12 @@ function restoreLocalDraft(){
     const t = document.getElementById('q_banco_otro');
     if(t) t.value = snap.bancoOtro || '';
   }
-  if(snap.radios && snap.radios.q_solicito === 'si'){
-    setProcesoVisible(true);
-  }
+  // Q7 viene con "Sí" marcado por defecto; si el borrador trae otra respuesta,
+  // sincronizar el estado visual y la compuerta con el valor realmente restaurado.
+  document.querySelectorAll('input[name="q_solicito"]').forEach(r => {
+    r.closest('.opcion').classList.toggle('selected', r.checked);
+  });
+  setProcesoVisible(getRadioValue('q_solicito') === 'si');
 
   if(typeof snap.currentBloque === 'number' && snap.currentBloque > 0 && snap.currentBloque < totalBloques){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
