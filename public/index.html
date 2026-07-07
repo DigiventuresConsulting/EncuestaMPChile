@@ -199,7 +199,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <!-- PROGRESS BAR -->
   <div class="progress-wrap">
     <div class="progress" id="progress-bar">
-      <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Tamaño</span></div>
+      <div class="step-circle active" id="step-1"><span>1</span><span class="step-label">Perfil</span></div>
       <div class="step-line" id="line-1-2"></div>
       <div class="step-circle pending" id="step-2"><span>2</span><span class="step-label">Capital</span></div>
       <div class="step-line" id="line-2-3"></div>
@@ -244,6 +244,13 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
           <label style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block">¿Cuál? <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
           <input type="text" id="q_banco_otro" placeholder="Nombre del banco o financiera">
         </div>
+      </div>
+    </div>
+    <div class="pregunta" id="pq-terminal">
+      <div class="pregunta-label">¿Cuenta con terminal de pago de ese banco? <span class="req">*</span></div>
+      <div class="opciones">
+        <label class="opcion"><input type="radio" name="q_terminal" value="si"> <span class="opcion-text">Sí</span></label>
+        <label class="opcion"><input type="radio" name="q_terminal" value="no"> <span class="opcion-text">No</span></label>
       </div>
     </div>
   </div>
@@ -300,7 +307,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
 
     <div class="pregunta" id="pq-q-std-monto">
-      <div class="pregunta-label">Q3. ¿Cuál es el monto máximo que le ofrecen los bancos comerciales en préstamos estándar sin garantía estatal para plazos de hasta 12 meses?</div>
+      <div class="pregunta-label">Q3. ¿Cuál es el monto máximo que le ofrecen para préstamos sin garantía estatal?</div>
       <div class="opciones">
         <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Hasta UF 2.500 (Aprox. $100M CLP / $110.000 USD)</span></label>
         <label class="opcion"><input type="radio" name="q_std_monto"> <span class="opcion-text">Entre UF 2.501 y UF 5.000 (Aprox. $100M a $200M CLP / $220.000 USD)</span></label>
@@ -343,7 +350,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
     </div>
 
     <div class="pregunta" id="pq-q-fogape-monto">
-      <div class="pregunta-label">Q6. ¿Cuál es el monto máximo que le ofrecen los bancos comerciales en préstamos con garantía FOGAPE para plazos de hasta 12 meses?</div>
+      <div class="pregunta-label">Q6. ¿Cuál es el monto máximo que le ofrecen para préstamos con garantía estatal (FOGAPE)?</div>
       <div class="opciones">
         <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Hasta UF 2.500</span></label>
         <label class="opcion"><input type="radio" name="q_fogape_monto"> <span class="opcion-text">Entre UF 2.501 y UF 5.000</span></label>
@@ -359,17 +366,9 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
   <div class="bloque" id="bloque-3">
     <div class="bloque-title">El proceso de solicitud</div>
 
-    <div class="pregunta" id="pq-solicito">
-      <div class="pregunta-label">Q7. ¿Su empresa ha pasado por un proceso de solicitud de financiamiento bancario en los últimos 24 meses?</div>
-      <div class="opciones">
-        <label class="opcion selected"><input type="radio" name="q_solicito" value="si" checked> <span class="opcion-text">Sí, hemos solicitado</span></label>
-        <label class="opcion"><input type="radio" name="q_solicito" value="no"> <span class="opcion-text">No, no hemos solicitado</span></label>
-      </div>
-    </div>
-
-    <div id="sub-proceso" style="display:block">
+    <div id="sub-proceso">
       <div class="pregunta" id="pq-canal">
-        <div class="pregunta-label">Q8. ¿A través de qué canal inició su última solicitud de financiamiento?</div>
+        <div class="pregunta-label">Q7. ¿Qué canales tiene disponible para solicitar financiamiento?</div>
         <div class="opciones">
           <label class="opcion"><input type="radio" name="q_canal" value="ejecutivo"> <span class="opcion-text">Ejecutivo de cuenta asignado (presencial o remoto)</span></label>
           <label class="opcion"><input type="radio" name="q_canal" value="sucursal"> <span class="opcion-text">Sucursal / presencial, sin ejecutivo asignado</span></label>
@@ -381,7 +380,7 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
       </div>
 
       <div class="pregunta" id="pq-asistencia">
-        <div class="pregunta-label">Q9. Durante la solicitud, ¿quién lo asistió principalmente?</div>
+        <div class="pregunta-label">Q8. ¿Quién lo asiste durante su proceso de solicitud?</div>
         <div class="opciones">
           <label class="opcion"><input type="radio" name="q_asistencia" value="humano_dedicado"> <span class="opcion-text">Un ejecutivo humano dedicado de principio a fin</span></label>
           <label class="opcion"><input type="radio" name="q_asistencia" value="humano_rotando"> <span class="opcion-text">Ejecutivos humanos, pero rotando de interlocutor</span></label>
@@ -392,45 +391,12 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
       </div>
 
       <div class="pregunta" id="pq-docs">
-        <div class="pregunta-label">Q10. Para informarle la tasa, ¿le exigieron documentación previa?</div>
+        <div class="pregunta-label">Q9. Para informarle la tasa, ¿le exigieron documentación previa?</div>
         <div class="opciones">
           <label class="opcion"><input type="radio" name="q_docs_tasa" value="carpeta_completa"> <span class="opcion-text">Sí, carpeta completa (EEFF, carpeta tributaria) antes de cotizar</span></label>
           <label class="opcion"><input type="radio" name="q_docs_tasa" value="basica"> <span class="opcion-text">Sí, documentación básica (identificación, ventas)</span></label>
           <label class="opcion"><input type="radio" name="q_docs_tasa" value="referencial_despues"> <span class="opcion-text">No, tasa referencial inmediata; la documentación vino después</span></label>
           <label class="opcion"><input type="radio" name="q_docs_tasa" value="sin_docs"> <span class="opcion-text">Me dieron la tasa sin pedir documentación</span></label>
-        </div>
-      </div>
-
-      <div class="pregunta" id="pq-tiempo">
-        <div class="pregunta-label">Q11. Punta a punta —desde que inició la solicitud hasta el desembolso o rechazo—, ¿cuánto tardó?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q_tiempo" value="48h"> <span class="opcion-text">Menos de 48 horas</span></label>
-          <label class="opcion"><input type="radio" name="q_tiempo" value="2a5d"> <span class="opcion-text">2 a 5 días hábiles</span></label>
-          <label class="opcion"><input type="radio" name="q_tiempo" value="1a2sem"> <span class="opcion-text">1 a 2 semanas</span></label>
-          <label class="opcion"><input type="radio" name="q_tiempo" value="2a4sem"> <span class="opcion-text">2 a 4 semanas</span></label>
-          <label class="opcion"><input type="radio" name="q_tiempo" value="mas1mes"> <span class="opcion-text">Más de 1 mes</span></label>
-        </div>
-      </div>
-
-      <div class="pregunta" id="pq-conformidad">
-        <div class="pregunta-label">Q12. En general, ¿qué tan conforme quedó con el proceso (independiente de la tasa)?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q_conformidad" value="muy_conforme"> <span class="opcion-text">Muy conforme</span></label>
-          <label class="opcion"><input type="radio" name="q_conformidad" value="conforme"> <span class="opcion-text">Conforme</span></label>
-          <label class="opcion"><input type="radio" name="q_conformidad" value="neutral"> <span class="opcion-text">Neutral</span></label>
-          <label class="opcion"><input type="radio" name="q_conformidad" value="disconforme"> <span class="opcion-text">Disconforme</span></label>
-          <label class="opcion"><input type="radio" name="q_conformidad" value="muy_disconforme"> <span class="opcion-text">Muy disconforme</span></label>
-        </div>
-      </div>
-
-      <div class="pregunta" id="pq-engorroso">
-        <div class="pregunta-label">Q13. ¿Qué fue lo más engorroso del proceso?</div>
-        <div class="opciones">
-          <label class="opcion"><input type="radio" name="q_engorroso" value="documentacion"> <span class="opcion-text">La cantidad de documentación exigida</span></label>
-          <label class="opcion"><input type="radio" name="q_engorroso" value="lentitud"> <span class="opcion-text">La lentitud de las respuestas</span></label>
-          <label class="opcion"><input type="radio" name="q_engorroso" value="interlocutor"> <span class="opcion-text">La falta de un interlocutor claro</span></label>
-          <label class="opcion"><input type="radio" name="q_engorroso" value="transparencia"> <span class="opcion-text">La poca transparencia sobre cómo se define la tasa</span></label>
-          <label class="opcion"><input type="radio" name="q_engorroso" value="ninguno"> <span class="opcion-text">Nada, fue ágil</span></label>
         </div>
       </div>
     </div>
@@ -491,22 +457,6 @@ function setBancoOtroVisible(show){
 document.querySelectorAll('input[name="q_banco"]').forEach(r => {
   r.addEventListener('change', function(){ setBancoOtroVisible(this.value === 'otro'); });
 });
-// Compuerta Q7: mostrar Q8–Q13 solo si respondió "Sí"; al ocultar, resetear ese sub-bloque
-function setProcesoVisible(show){
-  const sub = document.getElementById('sub-proceso');
-  if(!sub) return;
-  sub.style.display = show ? 'block' : 'none';
-  if(!show){
-    sub.querySelectorAll('input[type=radio]').forEach(r => {
-      r.checked = false;
-      const opt = r.closest('.opcion');
-      if(opt) opt.classList.remove('selected');
-    });
-  }
-}
-document.querySelectorAll('input[name="q_solicito"]').forEach(r => {
-  r.addEventListener('change', function(){ setProcesoVisible(this.value === 'si'); });
-});
 // Limpiar error del email al escribir
 const emailInput = document.getElementById('email');
 if(emailInput){
@@ -537,10 +487,11 @@ function showError(containerId, msg){
 }
 function validateBloque(b){
   clearErrors();
-  // Obligatorios: tamaño (Q0) + banco principal (paso 1) y email (Contacto). Capital de Trabajo (Q1-Q3), FOGAPE y Proceso son opcionales.
+  // Obligatorios: tamaño (Q0) + banco principal + terminal (paso 1) y email (Contacto). Capital de Trabajo (Q1-Q3), FOGAPE y Proceso son opcionales.
   if(b === 0){
     if(!document.querySelector('input[name="q0"]:checked')) return showError('pq-q0','Seleccione el tamaño de su empresa para continuar.');
     if(!document.querySelector('input[name="q_banco"]:checked')) return showError('pq-q-banco','Seleccione su banco principal para continuar.');
+    if(!document.querySelector('input[name="q_terminal"]:checked')) return showError('pq-terminal','Indique si cuenta con terminal de pago de ese banco.');
     return true;
   }
   if(b === 4){
@@ -561,8 +512,7 @@ function goNext(){
     gtag('event', 'etapa_completada', {
       etapa_numero: currentBloque + 1,
       etapa_nombre: etapas[currentBloque] || 'Desconocida',
-      form_name: 'Encuesta MP Chile',
-      solicito_financiamiento: getRadioValue('q_solicito')
+      form_name: 'Encuesta MP Chile'
     });
   }
   // Evento Meta Pixel en el primer botón Continuar (paso Tamaño)
@@ -628,7 +578,7 @@ function updateProgress(){
   const textosBoton = ['Comenzar encuesta →','Continuar →','Continuar →','Continuar →','Enviar y recibir mi informe →'];
   nextBtn.textContent = textosBoton[currentBloque];
   // Clarity: etiquetar el paso actual para segmentar sesiones por avance
-  const nombresPasos = ['Tamaño','Capital','FOGAPE','Proceso','Contacto'];
+  const nombresPasos = ['Perfil','Capital','FOGAPE','Proceso','Contacto'];
   if(window.clarity) clarity('set','paso_encuesta', nombresPasos[currentBloque]);
   // Indicador de paso para mobile (los step-label individuales se ocultan en <600px)
   const stepLabelMobile = document.getElementById('step-label-mobile');
@@ -697,8 +647,7 @@ function showSuccess() {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'form_completado', {
       form_name: 'Encuesta MP Chile',
-      value: 1,
-      solicito_financiamiento: getRadioValue('q_solicito')
+      value: 1
     });
   }
   renderCompleted();
@@ -735,19 +684,16 @@ function getFormSnapshot(){
     radios: {
       q0: getRadioValue('q0'),
       q_banco: getRadioValue('q_banco'),
+      q_terminal: getRadioValue('q_terminal'),
       q_std_clp: getRadioValue('q_std_clp'),
       q_std_uf: getRadioValue('q_std_uf'),
       q_std_monto: getRadioValue('q_std_monto'),
       q_fogape_clp: getRadioValue('q_fogape_clp'),
       q_fogape_uf: getRadioValue('q_fogape_uf'),
       q_fogape_monto: getRadioValue('q_fogape_monto'),
-      q_solicito: getRadioValue('q_solicito'),
       q_canal: getRadioValue('q_canal'),
       q_asistencia: getRadioValue('q_asistencia'),
-      q_docs_tasa: getRadioValue('q_docs_tasa'),
-      q_tiempo: getRadioValue('q_tiempo'),
-      q_conformidad: getRadioValue('q_conformidad'),
-      q_engorroso: getRadioValue('q_engorroso')
+      q_docs_tasa: getRadioValue('q_docs_tasa')
     }
   };
 }
@@ -839,19 +785,16 @@ function collectAnswers(){
     q0: getRadio('q0'),
     q_banco: getRadio('q_banco'),
     q_banco_otro: (document.getElementById('q_banco_otro')?.value || '').trim(),
+    q_terminal: getRadio('q_terminal'),
     q_std_clp: getRadio('q_std_clp'),
     q_std_uf: getRadio('q_std_uf'),
     q_std_monto: getRadio('q_std_monto'),
     q_fogape_clp: getRadio('q_fogape_clp'),
     q_fogape_uf: getRadio('q_fogape_uf'),
     q_fogape_monto: getRadio('q_fogape_monto'),
-    q_solicito: getRadio('q_solicito'),
     q_canal: getRadio('q_canal'),
     q_asistencia: getRadio('q_asistencia'),
-    q_docs_tasa: getRadio('q_docs_tasa'),
-    q_tiempo: getRadio('q_tiempo'),
-    q_conformidad: getRadio('q_conformidad'),
-    q_engorroso: getRadio('q_engorroso')
+    q_docs_tasa: getRadio('q_docs_tasa')
   };
 }
 
@@ -905,12 +848,6 @@ function restoreLocalDraft(){
     const t = document.getElementById('q_banco_otro');
     if(t) t.value = snap.bancoOtro || '';
   }
-  // Q7 viene con "Sí" marcado por defecto; si el borrador trae otra respuesta,
-  // sincronizar el estado visual y la compuerta con el valor realmente restaurado.
-  document.querySelectorAll('input[name="q_solicito"]').forEach(r => {
-    r.closest('.opcion').classList.toggle('selected', r.checked);
-  });
-  setProcesoVisible(getRadioValue('q_solicito') === 'si');
 
   if(typeof snap.currentBloque === 'number' && snap.currentBloque > 0 && snap.currentBloque < totalBloques){
     document.getElementById('bloque-'+currentBloque).classList.remove('active');
