@@ -224,6 +224,27 @@ src="https://www.facebook.com/tr?id=737277896129223&ev=PageView&noscript=1"
         <label class="opcion"><input type="radio" name="q0" value="gran"> <span class="opcion-text"><strong>Gran Empresa:</strong> Más de 100.000 UF (Más de $4,4 Millones USD)</span></label>
       </div>
     </div>
+    <div class="pregunta" id="pq-q-banco">
+      <div class="pregunta-label">Banco principal <span class="req">*</span></div>
+      <div class="pregunta-sub">La entidad con la que concretó su última operación de financiamiento.</div>
+      <div class="opciones">
+        <label class="opcion"><input type="radio" name="q_banco" value="chile"> <span class="opcion-text">Banco de Chile</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="bci"> <span class="opcion-text">BCI</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="santander"> <span class="opcion-text">Santander</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="bancoestado"> <span class="opcion-text">BancoEstado</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="scotiabank"> <span class="opcion-text">Scotiabank</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="bice"> <span class="opcion-text">Bice</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="itau"> <span class="opcion-text">Itaú</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="falabella"> <span class="opcion-text">Falabella</span></label>
+        <label class="opcion"><input type="radio" name="q_banco" value="otro"> <span class="opcion-text">Otro</span></label>
+      </div>
+      <div class="subpregunta" id="sub-banco-otro">
+        <div class="field" style="margin:0">
+          <label style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block">¿Cuál? <span style="color:var(--text3);font-weight:400">(opcional)</span></label>
+          <input type="text" id="q_banco_otro" placeholder="Nombre del banco o financiera">
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- BLOQUE 4: CONTACTO (último paso) -->
@@ -402,6 +423,16 @@ document.querySelectorAll('.opcion input[type=radio]').forEach(radio => {
     }
   });
 });
+// Banco principal: mostrar/ocultar el campo "Otro" según la selección
+function setBancoOtroVisible(show){
+  const sub = document.getElementById('sub-banco-otro');
+  if(!sub) return;
+  sub.classList.toggle('visible', show);
+  if(!show){ const t = document.getElementById('q_banco_otro'); if(t) t.value = ''; }
+}
+document.querySelectorAll('input[name="q_banco"]').forEach(r => {
+  r.addEventListener('change', function(){ setBancoOtroVisible(this.value === 'otro'); });
+});
 // Limpiar error del email al escribir
 const emailInput = document.getElementById('email');
 if(emailInput){
@@ -432,7 +463,11 @@ function showError(containerId, msg){
 }
 function validateBloque(b){
   clearErrors();
-  // Obligatorios: Bloque 1 de Capital de Trabajo (paso 1) y email (Contacto, paso final). FOGAPE y Garantías son opcionales.
+  // Obligatorios: banco principal (paso 1), Capital de Trabajo (paso 2) y email (Contacto). FOGAPE y Proceso son opcionales.
+  if(b === 0){
+    if(!document.querySelector('input[name="q_banco"]:checked')) return showError('pq-q-banco','Seleccione su banco principal para continuar.');
+    return true;
+  }
   if(b === 1){
     if(!document.querySelector('input[name="q_std_clp"]:checked')) return showError('pq-q-std-clp','Seleccione una opción para continuar.');
     if(!document.querySelector('input[name="q_std_uf"]:checked')) return showError('pq-q-std-uf','Seleccione una opción para continuar.');
@@ -625,8 +660,10 @@ function getFormSnapshot(){
     correo: document.getElementById('email').value.trim(),
     rut: document.getElementById('rut').value.trim(),
     telefono: document.getElementById('telefono').value.trim(),
+    bancoOtro: (document.getElementById('q_banco_otro')?.value || '').trim(),
     radios: {
       q0: getRadioValue('q0'),
+      q_banco: getRadioValue('q_banco'),
       q_std_clp: getRadioValue('q_std_clp'),
       q_std_uf: getRadioValue('q_std_uf'),
       q_std_monto: getRadioValue('q_std_monto'),
@@ -724,6 +761,8 @@ function collectAnswers(){
     mailContacto: correo,
     telefono: document.getElementById('telefono').value.trim(),
     q0: getRadio('q0'),
+    q_banco: getRadio('q_banco'),
+    q_banco_otro: (document.getElementById('q_banco_otro')?.value || '').trim(),
     q_std_clp: getRadio('q_std_clp'),
     q_std_uf: getRadio('q_std_uf'),
     q_std_monto: getRadio('q_std_monto'),
@@ -779,6 +818,11 @@ function restoreLocalDraft(){
         input.closest('.opcion').classList.add('selected');
       }
     });
+  }
+  if(snap.radios && snap.radios.q_banco === 'otro'){
+    setBancoOtroVisible(true);
+    const t = document.getElementById('q_banco_otro');
+    if(t) t.value = snap.bancoOtro || '';
   }
 
   if(typeof snap.currentBloque === 'number' && snap.currentBloque > 0 && snap.currentBloque < totalBloques){
